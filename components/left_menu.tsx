@@ -27,7 +27,7 @@ export default async function LeftMenu() {
                 <div>Chats history:</div>
             <div className="p-2">
                 {uniqueChatIds.map((chat) => (
-                    <div>
+                    <div key={chat}>
                         <Link href={`/chat/${chat}`} className="hover:underline">
                            {chat}
                         </Link>
