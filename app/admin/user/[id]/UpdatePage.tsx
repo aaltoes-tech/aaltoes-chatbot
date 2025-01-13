@@ -31,7 +31,7 @@ export default function UpdatePage({ user }: SettingsPageProps) {
   const form = useForm<UpdateAdminValues>({
     resolver: zodResolver(updateAdminSchema),
     defaultValues: {
-      quota: user.quota,
+      quota: 1,
       role: user.role as "Admin" | "User" | undefined,
     },
   });
