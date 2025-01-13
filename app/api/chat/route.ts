@@ -2,7 +2,6 @@ import { streamText } from "ai";
 import { createOpenAI } from "@ai-sdk/openai"; // Assuming the correct import is createOpenAI if openai is an API client factory
 
 import prisma from "../../../lib/prisma";
-import { stringify } from "querystring";
 import getSession from "../../../lib/getSession";
 
 // Initialize the OpenAI client with the API key

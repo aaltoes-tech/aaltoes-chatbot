@@ -4,12 +4,10 @@ import BotMessage from "./ui/bot-message";
 import UserMessage from "./ui/user-message";
 import { Textarea } from "../ui/textarea";
 
-import MarkdownView from 'react-showdown';
 
 import { signIn, useSession } from "next-auth/react";
 
 import { useChat } from "@ai-sdk/react";
-import cuid from "cuid";
 
 function Chatbot({ chat_id, init_messages}) {
     const { data: session, status } = useSession();

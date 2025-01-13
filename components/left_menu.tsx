@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+
 import getSession from "../lib/getSession";
 import prisma from "../lib/prisma";
 import Link from "next/link";

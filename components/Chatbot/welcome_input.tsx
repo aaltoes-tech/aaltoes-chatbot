@@ -1,10 +1,8 @@
 "use client"
 import { Button } from "../../components/ui/button";
-import { Textarea } from "../ui/textarea";
 import {useRouter} from 'next/navigation'
 import { signIn, useSession } from "next-auth/react";
 import cuid from 'cuid';
-import React, { useState } from 'react';
 
 import Link from "next/link";
 

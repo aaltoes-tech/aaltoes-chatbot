@@ -1,7 +1,4 @@
 import prisma from "../../../lib/prisma";
-import Image from "next/image";
-import { notFound } from "next/navigation";
-import { cache } from "react";
 
 import Link from "next/link";
 

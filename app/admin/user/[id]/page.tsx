@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { cache } from "react";
 import UpdatePage from "./UpdatePage";
 import Link from "next/link";
-import { Button } from "../../../../components/ui/button";
 import getSession from "../../../../lib/getSession";
 
 interface PageProps {

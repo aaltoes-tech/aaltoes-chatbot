@@ -1,5 +1,3 @@
-
-
 export default function BotMessage({role, content}){
     return(
         
