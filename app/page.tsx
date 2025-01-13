@@ -1,10 +1,3 @@
-import { redirect } from "next/navigation";
-
-import Image  from "next/image";
-import { Textarea } from "../components/ui/textarea"
-import { signIn, useSession } from "next-auth/react";
-import React, { useState } from 'react';
-import {useRouter} from 'next/navigation'
 import "./globals.css";
 import WelcomeInput from "../components/Chatbot/welcome_input";
 

@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@ai-sdk/openai": "^1.0.18",
-    "@auth/prisma-adapter": "^1.6.0",
+    "@auth/prisma-adapter": "^2.7.4",
     "@hookform/resolvers": "^3.3.4",
     "@neondatabase/serverless": "^0.9.1",
     "@prisma/adapter-neon": "^5.12.1",
@@ -29,7 +29,7 @@
     "framer-motion": "^4.1.17",
     "lucide-react": "^0.371.0",
     "marked": "^15.0.6",
-    "next": "14.2.1",
+    "next": "^14.2.23",
     "next-auth": "^5.0.0-beta.16",
     "next-mdx-remote": "^5.0.0",
     "openai": "^4.78.1",
