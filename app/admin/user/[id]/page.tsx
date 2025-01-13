@@ -33,7 +33,7 @@ export default async function Page({ params: { id } }: PageProps) {
   }
 
 
-  if (cur_user.role==!"Admin"){
+  if (cur_user.role!== "Admin"){
     return (
     <main className="mx-auto my-10 p-5">
       <p> You are not authorized to see this page</p>

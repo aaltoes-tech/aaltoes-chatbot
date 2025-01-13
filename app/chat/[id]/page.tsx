@@ -38,7 +38,7 @@ export default async function Page({ params: { id } }: PageProps) {
             </div>
             <div className="w-4/5 h-full  flex  flex-col bg-white p-4 shadow-lg items-center justify-center"> {/* Adjusted width to 80% and added some padding */}
               <div className="flex flex-col h-[80%] flex-1 w-full overflow-y-auto">
-                  <Chatbot chat_id={id} init_messages={messages}/>
+                  <Chatbot init_messages={messages}/>
               </div>
             </div>
         
