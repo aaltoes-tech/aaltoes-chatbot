@@ -15,34 +15,22 @@ model User {
   emailVerified DateTime?
   image         String?
   role          String?   @default("User")
-  accounts      Account[]
-  sessions      Session[]
+  accounts      Account[] // Assuming these are defined elsewhere in your schema
+  sessions      Session[] // Assuming these are defined elsewhere in your schema
   quota         Float?    @default(1)
   active        Boolean?  @default(true)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-  chats         Chat[]   // Each User can have multiple Chats
-
   @@map("users")
 }
 
-model Chat {
-  id    String    @id @default(cuid())
-  chat_topic String
-  user_id    String
-  user       User      @relation(fields: [user_id], references: [id], onDelete: Cascade) // Link back to User
-  messages   Message[] // Each Chat can have multiple Messages
-
-  @@map("chats")
-}
-
 model Message {
-  id String   @id @default(cuid())
+  id         String   @id @default(cuid())
   chat_id    String
-  question   String?
-  answer     String?
-  chat       Chat    @relation(fields: [chat_id], references: [id], onDelete: Cascade) // Link back to Chat
-
+  user_id    String
+  role       String?
+  content    String?
+  created_at DateTime @default(now())
   @@map("messages")
 }
 
