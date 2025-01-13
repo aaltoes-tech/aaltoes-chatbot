@@ -3,6 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 import UpdatePage from "./UpdatePage";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 import getSession from "../../../../lib/getSession";
 
@@ -27,8 +28,12 @@ export default async function Page({ params: { id } }: PageProps) {
 
   if (!user) notFound();
 
+  if (!cur_user) {
+    redirect("/api/auth/signin?callbackUrl=/admin");
+  }
 
-  if (cur_user.role !== "Admin" && cur_user!==undefined){
+
+  if (cur_user.role==!"Admin"){
     return (
     <main className="mx-auto my-10 p-5">
       <p> You are not authorized to see this page</p>
