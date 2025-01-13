@@ -23,14 +23,6 @@ export default async function Page({ params: { id } }: PageProps) {
 
   const cur_user = session?.user;
 
-  if (cur_user.active!==true) {
-    return (
-      <main className="flex flex-col items-center gap-6 px-3 py-10">
-        <h1 className="text-center text-4xl font-bold">Your account was permanently banned. Contact owner if you think that it is error.</h1>
-      </main>
-    );
-  }
-
   const user = await getUser(id);
 
   if (!user) notFound();
