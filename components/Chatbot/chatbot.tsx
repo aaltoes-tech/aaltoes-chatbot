@@ -9,7 +9,7 @@ import { signIn, useSession } from "next-auth/react";
 
 import { useChat } from "@ai-sdk/react";
 
-function Chatbot({ chat_id, init_messages}) {
+function Chatbot({init_messages}) {
     const { data: session, status } = useSession();
     const user = session?.user;
     const {
@@ -28,7 +28,6 @@ function Chatbot({ chat_id, init_messages}) {
     });
 
     if (messages.length == 0){
-        console.log("no")
         setMessages(init_messages);
     }
 
