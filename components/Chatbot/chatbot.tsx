@@ -7,6 +7,7 @@ import { useState, useEffect, useRef } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useChat } from "ai/react";
 import { ChevronDown, Send } from "lucide-react";
+import { toast } from "../ui/use-toast";
 
 type Message = {
     role: "user" | "system" | "assistant";
@@ -38,6 +39,14 @@ function Chatbot({init_messages, chat_id}: {init_messages: Message[], chat_id: s
         initialMessages: init_messages,
         onFinish: () => {
             messageCountRef.current = messages.length + 1;
+        },
+        onError: (error) => {
+            const errorMessage = error.message || 'An error occurred';
+            toast({
+                variant: "destructive",
+                title: "Error",
+                description: errorMessage
+            });
         }
     });
     useEffect(() => {
