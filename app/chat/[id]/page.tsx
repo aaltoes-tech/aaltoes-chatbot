@@ -10,6 +10,10 @@ type Message = {
     content: string;
     id: string;
 }
+interface Chat {
+  id: string;
+  topic: string;
+}
 
 interface PageProps {
   params: { id: string };
@@ -42,7 +46,7 @@ export default async function Page({ params: { id }}: PageProps) {
 
   const chats = await prisma.chat.findMany({
     where: {
-        user_id: user.id
+        user_id: user?.id
     },
     select: {
         id: true,
@@ -57,11 +61,16 @@ export default async function Page({ params: { id }}: PageProps) {
       <main className="flex h-screen items-stretch bg-gray-50 w-full ">
         <div className="flex w-full h-full">
             <div className="w-1/5 h-full flex flex-col bg-gray-100 p-4 overflow-y-auto">
-                <LeftMenu chats={chats} />
+                <LeftMenu chats={chats as Chat[]} />
             </div>
             <div className="w-4/5 h-full  flex  flex-col bg-white p-4 shadow-lg items-center justify-center">
               <div className="flex flex-col h-[80%] flex-1 w-full overflow-y-auto">
-                  <Chatbot init_messages={messages.filter(m => m.role && m.content) as Message[]} chat_id={id}/>
+                  <Chatbot 
+                    init_messages={messages
+                      .filter(m => m.role && m.content)
+                      .filter(m => ['user', 'system', 'assistant'].includes(m.role as string)) as Message[]} 
+                    chat_id={id}
+                  />
                </div>
             </div>
          </div>

@@ -18,7 +18,7 @@ export async function POST(req: Request) {
     const num_messages = parseInt(req.headers.get('num_messages') || '0');
 
     const chatHistory = await prisma.message.findMany({
-        where: { chat_id: chatId },
+        where: { chat_id: chatId || '' },
         orderBy: { created_at: 'desc' },
         take: 5,
         select: { 
