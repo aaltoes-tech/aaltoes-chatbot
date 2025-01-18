@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Trash2, MessageSquare, Plus } from "lucide-react";
+import { Trash2, MessageSquare, Plus, Search } from "lucide-react";
 import { Button } from "./ui/button";
+import { useState } from "react";
 
 interface Chat {
     id: string;
@@ -12,6 +13,7 @@ interface Chat {
 
 export default function LeftMenu({chats}: {chats: Chat[]}) {
     const router = useRouter();
+    const [searchTerm, setSearchTerm] = useState("");
 
     const deleteChat = async (chat_id: string) => {
         try {
@@ -29,6 +31,10 @@ export default function LeftMenu({chats}: {chats: Chat[]}) {
         }
     };
 
+    const filteredChats = chats.filter(chat => 
+        chat.topic.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <div className="flex flex-col h-full">
             <div className="p-2">
@@ -42,14 +48,29 @@ export default function LeftMenu({chats}: {chats: Chat[]}) {
                 </Link>
             </div>
 
+            <div className="px-2 mt-3">
+                <div className="relative">
+                    <input
+                        type="text"
+                        placeholder="Search chats..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="w-full px-3 py-2 pl-9 bg-gray-50 border border-gray-200 
+                                 rounded-lg focus:outline-none focus:ring-2 
+                                 focus:ring-blue-500 focus:border-transparent"
+                    />
+                    <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" size={10} />
+                </div>
+            </div>
+
             <div className="flex-1 overflow-y-auto">
-                {!chats || chats.length === 0 ? (
+                {!filteredChats || filteredChats.length === 0 ? (
                     <div className="text-gray-500 text-center mt-4 p-4">
-                        No conversations yet
+                        {searchTerm ? "No matching chats found" : "No conversations yet"}
                     </div>
                 ) : (
                     <div className="space-y-2 p-2">
-                        {chats.map((chat) => (
+                        {filteredChats.map((chat) => (
                             <div 
                                 key={chat.id}
                                 className="group flex items-center gap-3 rounded-lg hover:bg-gray-200 p-3 transition-all duration-200 cursor-pointer"
