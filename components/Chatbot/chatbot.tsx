@@ -44,8 +44,7 @@ function Chatbot({init_messages, chat_id}: {init_messages: Message[], chat_id: s
             const errorMessage = error.message || 'An error occurred';
             toast({
                 variant: "destructive",
-                title: "Error",
-                description: errorMessage
+                title: errorMessage,
             });
         }
     });
