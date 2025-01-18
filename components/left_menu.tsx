@@ -35,7 +35,6 @@ export default function LeftMenu({chats}: {chats: Chat[]}) {
                 <Link href="/" className="w-full block">
                     <Button 
                         className="w-full flex items-center justify-center gap-2 bg-black hover:bg-zinc-800 text-white hover:text-white border-0 transition-colors"
-                        variant="outline"
                     >
                         <Plus size={16} />
                         New Chat

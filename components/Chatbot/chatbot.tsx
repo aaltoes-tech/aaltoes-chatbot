@@ -19,7 +19,6 @@ function Chatbot({init_messages, chat_id}: {init_messages: Message[], chat_id: s
     const [selectedModel, setSelectedModel] = useState(session?.user?.model || 'gpt-4o-mini');
     const [reloadNeeded, setReloadNeeded] = useState(false);
     const messageCountRef = useRef(0);
-
     const {
         messages,
         input,
@@ -55,10 +54,7 @@ function Chatbot({init_messages, chat_id}: {init_messages: Message[], chat_id: s
     }, [reloadNeeded, reload]);
 
 
-    const handleModelChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
-      const newModel = event.target.value;
-      setSelectedModel(newModel);
-    };
+    
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (event.key === 'Enter' && !event.shiftKey) {
