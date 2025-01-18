@@ -33,7 +33,10 @@ export default async function Page() {
         <main className="flex h-screen items-stretch bg-gray-50 w-full">
             <div className="flex w-full h-full">
                 <div className="flex-none h-full flex flex-col bg-gray-100 p-2 overflow-y-auto">
-                    <LeftMenu chats={chats} />
+                    <LeftMenu chats={chats.map(chat => ({
+                        id: chat.id,
+                        topic: chat.topic ?? 'New Chat'
+                    }))} />
                 </div>
                 <div className="flex-1 h-full flex flex-col bg-white p-10 shadow-lg  ">
                 <WelcomeInput />

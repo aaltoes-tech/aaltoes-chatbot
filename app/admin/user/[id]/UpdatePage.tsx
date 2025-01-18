@@ -104,7 +104,7 @@ export default function UpdatePage({ user }: UpdatePageProps) {
                           <option value="Admin">Admin</option>
                         </select>
                       </FormControl>
-                      <FormDescription>User's permission level</FormDescription>
+                      <FormDescription>user&apos;s permission level</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}

@@ -4,7 +4,7 @@ import getSession from "../../../../lib/getSession";
 export async function DELETE(req: Request) {
     try {
         const session = await getSession();
-        const chatId = req.headers.get('chat_id');
+        const chatId = req.headers.get('chat_id') ?? '';
 
         if (!session?.user) {
             return new Response('Unauthorized', { status: 401 });
@@ -19,7 +19,7 @@ export async function DELETE(req: Request) {
 
             await tx.chat.delete({
                 where: {
-                    id: chatId as string,
+                    id: chatId,
                     user_id: session.user.id
                 }
             });

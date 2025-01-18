@@ -29,18 +29,24 @@ export async function POST(req: Request) {
    
     const lastMessages = chatHistory.reverse();
 
-    if (num_messages % 5 == 0){
-        const response = await generateText({
-            model: openaiClient(model),
-            prompt: `Generate a very concise chat topic (5 words) based on these messages:\n${lastMessages.map(m => `${m.role}: ${m.content}`).join('\n')}`,
-            max_tokens: 15,
-            temperature: 0.7
-        });
-        await prisma.chat.update({
-            where: { id: chatId },
-            data: { topic: response.text.trim() }
-        });
+    if (!chatId) {
+        return new Response('Chat ID is required', { status: 400 });
+    }else{
+        if (num_messages % 5 == 0){
+            const response = await generateText({
+                model: openaiClient(model),
+                prompt: `Generate a very concise chat topic (5 words) based on these messages:\n${lastMessages.map(m => `${m.role}: ${m.content}`).join('\n')}`,
+                maxTokens: 15,
+                temperature: 0.7
+            });
+            await prisma.chat.update({
+                where: { id: chatId },
+                data: { topic: response.text.trim() }
+            });
+        }
     }
+
+    
 
     if (!session || !user) {
         return Response.redirect(
@@ -74,7 +80,6 @@ export async function POST(req: Request) {
                 }
             });
         }
-        
         const stream = await streamText({
             model: openaiClient(model),
             messages: [...messages],

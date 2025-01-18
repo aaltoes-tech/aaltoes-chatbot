@@ -50,7 +50,7 @@ export default function WelcomeInput() {
                     How can I help you today?
                 </h1>
                 <p className="text-gray-500 text-center mb-6 text-sm">
-                    Ask me anything - I'm here to assist with your questions
+                    Ask me anything - I&apos;m here to assist with your questions
                 </p>
                 
                 <form onSubmit={handleSubmit} className="relative">

@@ -13,8 +13,12 @@ export async function POST(req: Request) {
 
         const new_chat = await prisma.chat.create({
             data: {
-                user_id: user.id,
-                topic: "New chat",
+                user: {
+                    connect: {
+                        id: user?.id
+                    }
+                },
+                topic: "New chat"
             },
             include: {
                 messages: true
@@ -29,10 +33,7 @@ export async function POST(req: Request) {
             }
         });
 
-        return new Response(JSON.stringify({ 
-            chat_id: new_chat.id, 
-            first_message_id: message.id 
-        }), {
+        return new Response(JSON.stringify({ chat_id: new_chat.id }), {
             headers: { 'Content-Type': 'application/json' },
         });
     } catch (error) {
