@@ -7,6 +7,7 @@ export const updateProfileSchema = z.object({
 export const updateAdminSchema = z.object({
   role: z.enum(["User", "Admin"]),
   quota:  z.union([z.string().transform((input) => parseInt(input)), z.number()]),
+  id: z.string(),
 });
 
 export type UpdateProfileValues = z.infer<typeof updateProfileSchema>;

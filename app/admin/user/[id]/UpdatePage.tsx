@@ -33,13 +33,13 @@ interface UpdatePageProps {
 
 export default function UpdatePage({ user }: UpdatePageProps) {
   const { toast } = useToast();
-  const session = useSession();
 
   const form = useForm<UpdateAdminValues>({
     resolver: zodResolver(updateAdminSchema),
     defaultValues: {
       quota: user.quota,
       role: user.role as "Admin" | "User" | undefined,
+      id: user.id,
     },
   });
 
