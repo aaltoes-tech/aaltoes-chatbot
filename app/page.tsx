@@ -3,8 +3,11 @@ import WelcomeInput from "../components/Chatbot/welcome_input";
 import LeftMenu from "../components/left_menu";
 import prisma from "../lib/prisma";
 import getSession from "../lib/getSession";
-import { MessageSquare } from "lucide-react";
 
+interface Chat {
+    id: string;
+    topic: string;
+}
 export default async function Page() {
 
     const session = await getSession();
@@ -33,10 +36,7 @@ export default async function Page() {
         <main className="flex h-screen items-stretch bg-gray-50 w-full">
             <div className="flex w-full h-full">
                 <div className="flex-none h-full flex flex-col bg-gray-100 p-2 overflow-y-auto">
-                    <LeftMenu chats={chats.map(chat => ({
-                        id: chat.id,
-                        topic: chat.topic ?? 'New Chat'
-                    }))} />
+                    <LeftMenu chats={chats as Chat[]} />
                 </div>
                 <div className="flex-1 h-full flex flex-col bg-white p-10 shadow-lg  ">
                 <WelcomeInput />
