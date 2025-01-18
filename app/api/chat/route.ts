@@ -43,7 +43,7 @@ export async function POST(req: Request) {
         if (user_quota?.quota && user_quota.quota <= 0) {
             return new Response(JSON.stringify({
                 error: 'Quota Exceeded',
-                message: 'Your message quota has been exceeded'
+                message: 'Your message quota has been exceeded. Please contact admin to increase your quota.'
             }), { 
                 status: 403,
                 headers: { 'Content-Type': 'application/json' }

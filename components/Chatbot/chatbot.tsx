@@ -6,7 +6,7 @@ import { Textarea } from "../ui/textarea";
 import { useState, useEffect, useRef } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useChat } from "ai/react";
-import { ChevronDown, Send, AlertCircle } from "lucide-react";
+import { ChevronDown, Send } from "lucide-react";
 import { toast } from "../ui/use-toast";
 
 type Message = {
@@ -41,20 +41,10 @@ function Chatbot({init_messages, chat_id}: {init_messages: Message[], chat_id: s
             messageCountRef.current = messages.length + 1;
         },
         onError: (error) => {
-            let errorMessage = error.message || 'An error occurred';
-            
-            // Clean up error messages
-            if (errorMessage.includes('Quota exceeded')) {
-                errorMessage = 'Message quota exceeded. Please contact admin to increase your quota.';
-            } else if (errorMessage.includes('Failed to generate')) {
-                errorMessage = 'Failed to generate response. Please try again.';
-            }
-
+            const errorMessage = error.message || 'An error occurred';
             toast({
                 variant: "destructive",
-                title: "Error",
-                description: errorMessage,
-
+                title: errorMessage,
             });
         }
     });
@@ -87,17 +77,6 @@ function Chatbot({init_messages, chat_id}: {init_messages: Message[], chat_id: s
 
     return (
         <div className="flex flex-col h-full w-full">
-            {error && (
-                <div className="mx-6 mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-                    <div className="flex items-center gap-2 text-red-700">
-                        <AlertCircle className="h-5 w-5" />
-                        <p className="text-sm font-medium">
-                            {error.message || 'An error occurred. Please try again.'}
-                        </p>
-                    </div>
-                </div>
-            )}
-            
             <div className="flex-1 overflow-y-auto p-6 space-y-4 h-4/5">
                 {messages.length > 0 && messages.map((m, index) => (
                     <div key={index} className="fade-in">
