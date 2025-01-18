@@ -25,8 +25,7 @@ export default async function Page() {
           id: 'desc'
       }
     }) : [];
-   
-    // Get user's quota if logged in
+
     const userQuota = user ? await prisma.user.findUnique({
         where: { id: user.id },
         select: { quota: true }

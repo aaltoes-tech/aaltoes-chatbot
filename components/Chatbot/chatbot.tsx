@@ -5,10 +5,7 @@ import UserMessage from "./ui/user-message";
 import { Textarea } from "../ui/textarea";
 import { useState, useEffect, useRef } from "react";
 import { signIn, useSession } from "next-auth/react";
-import { useChat } from "@ai-sdk/react";
-import { toast } from "../ui/use-toast";
-import { MODELS } from "../../lib/constants";
-import { useRouter } from "next/navigation";
+import { useChat } from "ai/react";
 import { ChevronDown, Send } from "lucide-react";
 
 type Message = {
