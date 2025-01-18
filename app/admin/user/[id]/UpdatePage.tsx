@@ -76,7 +76,7 @@ export default function UpdatePage({ user }: UpdatePageProps) {
                 <User className="w-5 h-5 text-blue-500" />
               </div>
               <div>
-                <h1 className="text-xl font-semibold text-gray-900">Update User</h1>
+                <h1 className="text-xl font-semibold text-gray-900">{user.name}</h1>
                 <p className="text-sm text-gray-500 mt-1">
                   Modify user data
                 </p>
