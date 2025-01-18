@@ -9,17 +9,17 @@ import { revalidatePath } from "next/cache";
 
 export async function updateProfile(values: UpdateAdminValues) {
   const session = await auth();
-  const userId = session?.user?.id;
 
-  if (!userId) {
+
+  if (session?.user?.role !== "Admin") {
     throw Error("Unauthorized");
   }
 
-  const { quota, role } = updateAdminSchema.parse(values);
+  const { quota, role, id } = updateAdminSchema.parse(values);
 
   await prisma.user.update({
     where: {
-      id: userId,
+      id: id,
     },
     data: {
       quota,

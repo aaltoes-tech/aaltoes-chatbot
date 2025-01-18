@@ -47,7 +47,6 @@ export default function UpdatePage({ user }: UpdatePageProps) {
     try {
       await updateProfile(data);
       toast({ description: "Profile updated successfully." });
-      session.update();
     } catch (error) {
       toast({
         variant: "destructive",
