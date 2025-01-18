@@ -48,7 +48,7 @@ export default async function Page() {
                                     </span>
                                 </div>
                                 <span className="font-medium text-blue-600">
-                                    {userQuota?.quota || 0}$
+                                    {(userQuota?.quota || 0).toFixed(3)}$
                                 </span>
                             </div>
                         </div>
