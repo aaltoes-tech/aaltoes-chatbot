@@ -14,24 +14,31 @@ import { Input } from "../../../../components/ui/input";
 import { useToast } from "../../../../components/ui/use-toast";
 import { UpdateAdminValues, updateAdminSchema } from "../../../../lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { User } from "next-auth";
 import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { updateProfile } from "./actions";
+import { ArrowLeft, Shield, User } from "lucide-react";
+import Link from "next/link";
 
-// Inside your component
-interface SettingsPageProps {
-  user: User;
+interface UpdatePageProps {
+  user: {
+    id: string,
+    name: string,
+    image: string,
+    createdAt: Date,
+    quota: number,
+    role: string,
+  }
 }
 
-export default function UpdatePage({ user }: SettingsPageProps) {
+export default function UpdatePage({ user }: UpdatePageProps) {
   const { toast } = useToast();
   const session = useSession();
 
   const form = useForm<UpdateAdminValues>({
     resolver: zodResolver(updateAdminSchema),
     defaultValues: {
-      quota: 1,
+      quota: user.quota,
       role: user.role as "Admin" | "User" | undefined,
     },
   });
@@ -39,9 +46,8 @@ export default function UpdatePage({ user }: SettingsPageProps) {
   async function onSubmit(data: UpdateAdminValues) {
     try {
       await updateProfile(data);
-      toast({ description: "Profile updated." });
+      toast({ description: "Profile updated successfully." });
       session.update();
-      
     } catch (error) {
       toast({
         variant: "destructive",
@@ -51,49 +57,98 @@ export default function UpdatePage({ user }: SettingsPageProps) {
   }
 
   return (
-    <main className="px-3 py-10">
-      <section className="mx-auto max-w-7xl space-y-6">
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="max-w-sm space-y-2.5"
+    <main className="min-h-screen  py-10 h-200">
+      <div className="max-w-3xl mx-auto px-4">
+        <div className="mb-6">
+          <Link 
+            href="/admin" 
+            className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700"
           >
-            <FormField
-              control={form.control}
-              name="role"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Role</FormLabel>
-                  <FormControl>
-                    <select {...field} className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        <option value="User">User</option>
-                        <option value="Admin">Admin</option>
-                      </select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="quota"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Quota</FormLabel>
-                  <FormControl>
-                    <Input  type="number" {...field} min="0" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit" disabled={form.formState.isSubmitting}>
-              Save
-            </Button>
-          </form> 
-        </Form>
-          
-      </section>
+            <ArrowLeft className="w-4 h-4 mr-1" />
+            Back to Admin Dashboard
+          </Link>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100">
+          {/* Header */}
+          <div className="p-6 border-b border-gray-100">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="p-2 bg-blue-50 rounded-lg">
+                <User className="w-5 h-5 text-blue-500" />
+              </div>
+              <div>
+                <h1 className="text-xl font-semibold text-gray-900">Update User</h1>
+                <p className="text-sm text-gray-500 mt-1">
+                  Modify user data
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Form */}
+          <div className="p-6">
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <FormField
+                  control={form.control}
+                  name="role"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Role</FormLabel>
+                      <FormControl>
+                        <select 
+                          {...field} 
+                          className="w-full  border border-gray-200 bg-white rounded-lg 
+                                   focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                          <option value="User">User</option>
+                          <option value="Admin">Admin</option>
+                        </select>
+                      </FormControl>
+                      <FormDescription>User's permission level</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="quota"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Quota ($)</FormLabel>
+                      <FormControl>
+                        <Input 
+                          type="number" 
+                          {...field} 
+                          className="max-w-md"
+                        />
+                      </FormControl>
+                      <FormDescription>Available message quota</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <div className="flex gap-4 pt-4">
+                  <Button
+                    type="submit"
+                    disabled={form.formState.isSubmitting}
+                    className="bg-blue-500 hover:bg-blue-600"
+                  >
+                    {form.formState.isSubmitting ? "Saving..." : "Save Changes"}
+                  </Button>
+                  <Link href="/admin">
+                    <Button
+                      type="button"
+                      variant="outline"
+                    >
+                      Cancel
+                    </Button>
+                  </Link>
+                </div>
+              </form>
+            </Form>
+          </div>
+        </div>
+      </div>
     </main>
   );
 }

@@ -7,5 +7,7 @@ declare module "next-auth" {
 
   interface User {
     role: String | null;
+    quota: number | 1;
+    model: string | "gpt-4o-mini";
   }
 }

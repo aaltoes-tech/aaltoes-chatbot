@@ -1,9 +1,7 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth";
 import { Adapter } from "next-auth/adapters";
-import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
-import Resend from "next-auth/providers/resend";
 import prisma from "./lib/prisma";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -15,6 +13,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     session({ session, user }) {
       session.user.role = user.role;
+      session.user.quota = user.quota;
+      session.user.model = user.model || "gpt-4o-mini";
       return session;
     },
   },

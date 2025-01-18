@@ -14,7 +14,14 @@ interface PageProps {
 const getUser = cache(async (id: string) => {
   return prisma.user.findUnique({
     where: { id },
-    select: { id: true, name: true, image: true, createdAt: true, quota:true, role: true },
+    select: { 
+      id: true, 
+      name: true, 
+      image: true, 
+      createdAt: true, 
+      quota: true, 
+      role: true,
+    },
   });
 });
 
@@ -43,24 +50,14 @@ export default async function Page({ params: { id } }: PageProps) {
   }else{
     return (
       <div className="mx-3 my-10 flex flex-col items-center gap-3">
-            {user.image && (
-              <Image
-                src={user.image}
-                width={100}
-                alt="User profile picture"
-                height={100}
-                className="rounded-full"
-              />
-            )}
-            <h1 className="text-center text-xl font-bold">
-              {user?.name || `User ${id}`}
-            </h1>
-            <p className="text-muted-foreground">
-              User since {new Date(user.createdAt).toLocaleDateString()}
-            </p>
-            <Link href={`/admin`} className="hover:underline">Back</Link>
-          
-            <UpdatePage user={user} />;
+            <UpdatePage user={{
+                id: user.id,
+                name: user.name ?? '',
+                image: user.image ?? '',
+                role: user.role ?? '',
+                quota: user.quota ?? 0,
+                createdAt: user.createdAt
+            }}/>
           </div>
       );
   }
