@@ -163,8 +163,7 @@ export default function BotMessage({
         const streamText = () => {
             if (currentIndex < content.length) {
                 bufferRef.current += content[currentIndex];
-                currentIndex++;
-                
+                currentIndex++
                 // Update display if we have a complete line or code block
                 if (content[currentIndex - 1] === '\n' || 
                     bufferRef.current.includes('```') || 
