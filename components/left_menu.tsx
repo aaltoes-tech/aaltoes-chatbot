@@ -68,7 +68,7 @@ export default function LeftMenu({ onClose }: LeftMenuProps = {}) {
     const olderChats = filteredChats.slice(5);
 
     return (
-        <div className="flex flex-col h-full bg-gray-100">
+        <div className="flex flex-col h-full bg-gray-100 overflow-y-auto">
             <div className="pt-[2px]">
                 <div className="flex items-center gap-2 p-2">
                     {onClose && (
