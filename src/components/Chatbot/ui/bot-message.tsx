@@ -134,62 +134,16 @@ const MemoizedMarkdown = memo(({ content }: { content: string }) => {
 MemoizedMarkdown.displayName = 'MemoizedMarkdown';
 
 export default function BotMessage({
-    role, 
-    content, 
-    isLast,
-    createdAt
+    content,
 }: {
     role: string;
     content: string;
-    isLast?: boolean;
     createdAt?: Date;
 }) {
-    const [displayedContent, setDisplayedContent] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const bufferRef = useRef('');
-    const isNew = isLast && createdAt && (Date.now() - new Date(createdAt).getTime() < 1000);
-    
-    useEffect(() => {
-        if (!isNew) {
-            setDisplayedContent(content);
-            setIsLoading(false);
-            return;
-        }
-
-        setIsLoading(true);
-        bufferRef.current = '';
-        let currentIndex = 0;
-        
-        const streamText = () => {
-            if (currentIndex < content.length) {
-                bufferRef.current += content[currentIndex];
-                currentIndex++
-                // Update display if we have a complete line or code block
-                if (content[currentIndex - 1] === '\n' || 
-                    bufferRef.current.includes('```') || 
-                    currentIndex === content.length) {
-                    setDisplayedContent(prev => prev + bufferRef.current);
-                    bufferRef.current = '';
-                }
-                
-                setTimeout(streamText, 3);
-            } else {
-                setIsLoading(false);
-            }
-        };
-
-        streamText();
-        
-        return () => {
-            currentIndex = content.length; // Stop streaming
-        };
-    }, [content, isNew]);
-
     return (
         <div className="flex w-full p-3 my-2">
             <div className="text-left w-full p-3 text-base leading-relaxed">
-                <MemoizedMarkdown content={displayedContent} />
-                {isLoading && <LoadingDots />}
+                <MemoizedMarkdown content={content} />
             </div>
         </div>
     );

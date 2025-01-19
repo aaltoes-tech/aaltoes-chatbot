@@ -14,12 +14,12 @@ model User {
   email         String    @unique
   emailVerified DateTime?
   image         String?
-  role          String?   @default("User")
+  role          String   @default("User")
   accounts      Account[] 
   sessions      Session[] 
   chats         Chat[]
-  quota         Float?    @default(1)
-  active        Boolean?  @default(true)
+  quota         Float    @default(1)
+  active        Boolean  @default(true)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   @@map("users")
@@ -30,7 +30,7 @@ model Chat {
   user_id    String
   user       User      @relation(fields: [user_id], references: [id])
   messages   Message[] 
-  topic      String? @default("New chat")
+  topic      String   @default("New chat")
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   @@map("chats")
@@ -40,8 +40,8 @@ model Message {
   id         String   @id @default(cuid())
   chat_id    String
   chat       Chat     @relation(fields: [chat_id], references: [id])
-  role       String?
-  content    String?
+  role       ChatRole @default(user)
+  content    String   @default("New message")
   created_at DateTime @default(now())
   @@map("messages")
 }
@@ -88,4 +88,10 @@ model VerificationToken {
 
   @@id([identifier, token])
   @@map("verification_tokens")
+}
+
+enum ChatRole {
+  user
+  system
+  assistant
 }

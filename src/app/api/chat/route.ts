@@ -71,15 +71,13 @@ export async function POST(req: Request) {
         }
 
         try {
-            if (req.headers.get('reload') === "false") {
-                await prisma.message.create({
-                    data: {
-                        role: 'user',
-                        content: messages[messages.length-1].content,
-                        chat_id: chatId,
-                    }
-                });
-            }
+            await prisma.message.create({
+                data: {
+                    role: 'user',
+                    content: messages[messages.length-1].content,
+                    chat_id: chatId,
+                }
+            });
 
             if (num_messages % 5 === 0) {
                 const chatHistory = await prisma.message.findMany({
