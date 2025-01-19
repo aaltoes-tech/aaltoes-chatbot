@@ -96,7 +96,11 @@ export default function LeftMenu({ onClose }: LeftMenuProps = {}) {
                         </div>
                     </div>
 
-                    <Link href="/" className="block">
+                    <Link 
+                        href="/" 
+                        onClick={onClose} 
+                        className="block"
+                    >
                         <Button className="w-full flex items-center justify-center gap-2 bg-black hover:bg-zinc-800 text-white hover:text-white border-0 transition-colors">
                             <Plus size={16} />
                             New Chat
