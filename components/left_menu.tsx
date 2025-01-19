@@ -68,11 +68,11 @@ export default function LeftMenu({ onClose }: LeftMenuProps = {}) {
     const olderChats = filteredChats.slice(5);
 
     return (
-        <div className="flex flex-col h-full bg-gray-100 overflow-y-auto">
-            <div className="pt-[2px]">
-                <div className="flex items-center gap-2 p-2">
-                    {onClose && (
-                        <>
+        <div className="flex flex-col h-full bg-gray-100">
+            <div className="pt-[2px] flex flex-col h-full">
+                <div className="flex-none p-2 space-y-3">
+                    <div className="flex items-center gap-2">
+                        {onClose && (
                             <Button
                                 variant="ghost"
                                 size="sm"
@@ -81,27 +81,23 @@ export default function LeftMenu({ onClose }: LeftMenuProps = {}) {
                             >
                                 <X size={20} />
                             </Button>
-                        </>
-                    )}
-                    <div className="flex-1 relative">
-                        <input
-                            type="text"
-                            placeholder="Search chats..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full px-3 py-2 pl-9 bg-gray-50 border border-gray-200 
-                                     rounded-lg focus:outline-none focus:ring-2 
-                                     focus:ring-blue-500 focus:border-transparent"
-                        />
-                        <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" size={10} />
+                        )}
+                        <div className="flex-1 relative">
+                            <input
+                                type="text"
+                                placeholder="Search chats..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                className="w-full px-3 py-2 pl-9 bg-gray-50 border border-gray-200 
+                                         rounded-lg focus:outline-none focus:ring-2 
+                                         focus:ring-blue-500 focus:border-transparent"
+                            />
+                            <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" size={10} />
+                        </div>
                     </div>
-                </div>
 
-                <div className="px-2 mt-3">
                     <Link href="/" className="block">
-                        <Button 
-                            className="w-full flex items-center justify-center gap-2 bg-black hover:bg-zinc-800 text-white hover:text-white border-0 transition-colors"
-                        >
+                        <Button className="w-full flex items-center justify-center gap-2 bg-black hover:bg-zinc-800 text-white hover:text-white border-0 transition-colors">
                             <Plus size={16} />
                             New Chat
                         </Button>
