@@ -172,7 +172,7 @@ export default function BotMessage({
                     bufferRef.current = '';
                 }
                 
-                setTimeout(streamText, 10);
+                setTimeout(streamText, 3);
             } else {
                 setIsLoading(false);
             }

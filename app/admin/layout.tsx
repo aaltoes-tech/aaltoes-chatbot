@@ -12,7 +12,7 @@ export default async function AdminLayout({
         redirect("/api/auth/signin?callbackUrl=/admin");
     }
 
-    if (session.user.role !== 'admin') {
+    if (session.user.role !== 'Admin') {
         redirect("/");
     }
 
