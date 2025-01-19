@@ -6,6 +6,7 @@ import { Send, MessageSquare } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useChat } from "ai/react";
 import cuid from "cuid";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function WelcomeInput() {
   const { data: session } = useSession();
@@ -21,6 +22,8 @@ export default function WelcomeInput() {
     session?.user?.model || "gpt-4o-mini",
   );
 
+  const queryClient = useQueryClient();
+
   const { append } = useChat({
     id: id,
     api: "/api/chat",
@@ -29,7 +32,7 @@ export default function WelcomeInput() {
       num_messages: "0",
     },
     body: {
-      id: id
+      id: id,
     },
     initialMessages: [],
   });
@@ -56,6 +59,9 @@ export default function WelcomeInput() {
           role: "user",
           content: content,
           id: id,
+        });
+        queryClient.refetchQueries({
+          queryKey: ["chats", { userId: session.user.id }],
         });
         router.push(`/chat/${id}`);
       } catch (error) {

@@ -52,6 +52,7 @@ const ChatsList = ({ userId }: { userId: string }) => {
   const { data: chats, status } = useQuery({
     queryKey: ["chats", { userId: userId }],
     queryFn: () => fetchChats({ userId: userId }),
+    refetchInterval: 20000,
   });
 
   const router = useRouter();
