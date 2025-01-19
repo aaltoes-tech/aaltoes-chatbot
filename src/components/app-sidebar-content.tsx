@@ -1,6 +1,10 @@
 "use client";
 
-import { SidebarContent, SidebarGroup } from "@/components/ui/sidebar";
+import {
+  SidebarContent,
+  SidebarGroup,
+  useSidebar,
+} from "@/components/ui/sidebar";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { z } from "zod";
@@ -8,6 +12,7 @@ import { ChatButton } from "./ui/chat-button";
 import { useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import { Search } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
 
 const chatSchema = z.object({
   id: z.string(),
@@ -49,8 +54,12 @@ const ChatsList = ({ userId }: { userId: string }) => {
     queryFn: () => fetchChats({ userId: userId }),
   });
 
+  const router = useRouter();
+  const pathname = usePathname();
+
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredChats, setFilteredChats] = useState(chats ?? []);
+  const { setOpenMobile } = useSidebar();
 
   useEffect(() => {
     setFilteredChats(
@@ -77,12 +86,21 @@ const ChatsList = ({ userId }: { userId: string }) => {
           placeholder="Search chats"
           className="pl-11"
         />
-        <Search
-          className="absolute left-4 top-1/2 -translate-y-1/2 transform text-muted-foreground h-4 w-4"
-        />
+        <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 transform text-muted-foreground" />
       </div>
       {filteredChats.map((chat) => (
-        <ChatButton key={chat.id} id={chat.id} topic={chat.topic} />
+        <ChatButton
+          key={chat.id}
+          id={chat.id}
+          topic={chat.topic}
+          onClick={() => setOpenMobile(false)}
+          onDelete={(id) => {
+            if (pathname === `/chat/${id}`) {
+              router.push("/");
+            }
+          }
+          }
+        />
       ))}
     </SidebarGroup>
   );

@@ -9,6 +9,7 @@ interface ChatButtonProps {
   id: string;
   topic: string | null;
   onDelete?: (id: string) => void;
+  onClick?: () => void;
 }
 
 const deleteChat = async (chatId: string) => {
@@ -22,7 +23,7 @@ const deleteChat = async (chatId: string) => {
   if (!response.ok) throw new Error("Failed to delete chat");
 };
 
-export function ChatButton({ id, topic, onDelete }: ChatButtonProps) {
+export function ChatButton({ id, topic, onDelete, onClick }: ChatButtonProps) {
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -48,6 +49,7 @@ export function ChatButton({ id, topic, onDelete }: ChatButtonProps) {
       <MessageSquare className="!h-4 !w-4 text-muted-foreground" />
       <Link
         href={`/chat/${id}`}
+        onClick={onClick}
         className="flex-1 ml-1 truncate text-sm text-gray-600 group-hover:text-gray-900"
       >
         <div className="">{topic || "New Chat"}</div>

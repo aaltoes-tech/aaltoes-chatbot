@@ -30,18 +30,18 @@ export default function NavBar({ onMenuClick }: NavBarProps = {}) {
     setSelectedModel(newModel);
   };
 
-  const { open } = useSidebar();
+  const { open, openMobile, isMobile } = useSidebar();
 
   return (
     <header className="sticky top-0 shadow-sm">
       <nav className="max-w-8xl mx-auto flex h-14 w-full items-center justify-between gap-3 bg-background px-2">
         <div className="flex items-center gap-2">
-          {!open && (
-            <div className="flex gap-1 items-center">
+          {(isMobile && !openMobile) || (!isMobile && !open) ? (
+            <div className="flex items-center gap-1">
               <SidebarTrigger />
               <NewChatButton />
             </div>
-          )}
+          ) : null}
           <Link href="/" className="ml-1 font-bold">
             Aaltoes ChatBot
           </Link>
