@@ -1,10 +1,18 @@
 import prisma from "../../../../lib/prisma";
 import getSession from "../../../../lib/getSession";
+import { z } from "zod";
+
+const chatSchema = z.object({
+    chatId: z.string()
+});
 
 export async function DELETE(req: Request) {
     try {
         const session = await getSession();
-        const chatId = req.headers.get('chat_id') ?? '';
+        const body = chatSchema.safeParse(await req.json());
+        if (!body.success) {
+            return new Response('Invalid chat ID', { status: 400 });
+        }
 
         if (!session?.user) {
             return new Response('Unauthorized', { status: 401 });
@@ -13,13 +21,13 @@ export async function DELETE(req: Request) {
         await prisma.$transaction(async (tx) => {
             await tx.message.deleteMany({
                 where: {
-                    chat_id: chatId
+                    chat_id: body.data.chatId
                 }
             });
 
             await tx.chat.delete({
                 where: {
-                    id: chatId,
+                    id: body.data.chatId,
                     user_id: session.user.id
                 }
             });
