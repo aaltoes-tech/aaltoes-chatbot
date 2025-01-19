@@ -32,6 +32,7 @@ model Chat {
   messages   Message[] 
   topic      String? @default("New chat")
   created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
   @@map("chats")
 }
 

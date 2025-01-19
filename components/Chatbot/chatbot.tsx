@@ -15,11 +15,36 @@ type Message = {
     id: string;
 }
 
-function Chatbot({init_messages, chat_id}: {init_messages: Message[], chat_id: string}) {
+function Chatbot({ chat_id }: { chat_id: string }) {
     const { data: session } = useSession();
     const [selectedModel, setSelectedModel] = useState(session?.user?.model || 'gpt-4o-mini');
     const [reloadNeeded, setReloadNeeded] = useState(false);
     const messageCountRef = useRef(0);
+    const [initialMessages, setInitialMessages] = useState<Message[]>([]);
+
+    useEffect(() => {
+        async function fetchMessages() {
+            try {
+                const response = await fetch(`/api/chat/${chat_id}/messages`, {
+                    method: 'GET',
+                });
+                if (!response.ok) throw new Error('Failed to fetch messages');
+                const data = await response.json();
+                const filteredMessages = data
+                    .filter((m: Message) => m.role && m.content)
+                    .filter((m: Message) => ['user', 'system', 'assistant'].includes(m.role));
+                setInitialMessages(filteredMessages);
+            } catch (error) {
+                console.error('Error fetching messages:', error);
+                toast({
+                    variant: "destructive",
+                    title: "Failed to load messages"
+                });
+            }
+        }
+        fetchMessages();
+    }, [chat_id]);
+
     const {
         messages,
         input,
@@ -33,10 +58,10 @@ function Chatbot({init_messages, chat_id}: {init_messages: Message[], chat_id: s
         headers: {
             model: selectedModel,
             chat_id: chat_id,
-            reload: reloadNeeded? "true" : "false",
+            reload: reloadNeeded ? "true" : "false",
             num_messages: messageCountRef.current.toString()
         },
-        initialMessages: init_messages,
+        initialMessages,
         onFinish: () => {
             messageCountRef.current = messages.length + 1;
         },
@@ -48,11 +73,12 @@ function Chatbot({init_messages, chat_id}: {init_messages: Message[], chat_id: s
             });
         }
     });
+
     useEffect(() => {
-        if (init_messages[init_messages.length-1]?.role === "user") {
+        if (initialMessages[initialMessages.length-1]?.role === "user") {
             setReloadNeeded(true);
         }
-    }, [init_messages]);
+    }, [initialMessages]);
 
     useEffect(() => {
         if (reloadNeeded) {
@@ -61,8 +87,6 @@ function Chatbot({init_messages, chat_id}: {init_messages: Message[], chat_id: s
         }
     }, [reloadNeeded, reload]);
 
-
-    
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (event.key === 'Enter' && !event.shiftKey) {

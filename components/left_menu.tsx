@@ -4,16 +4,40 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Trash2, MessageSquare, Plus, Search } from "lucide-react";
 import { Button } from "./ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 interface Chat {
     id: string;
-    topic: string;
+    topic: string | null;
 }
 
-export default function LeftMenu({chats}: {chats: Chat[]}) {
+export default function LeftMenu() {
     const router = useRouter();
+    const { data: session } = useSession();
     const [searchTerm, setSearchTerm] = useState("");
+    const [chats, setChats] = useState<Chat[]>([]);
+
+    useEffect(() => {
+        async function fetchChats() {
+            if (session?.user?.id) {
+                try {
+                    const response = await fetch('/api/chat/select', {
+                        method: 'GET',
+                        headers: {
+                            'user_id': session.user.id
+                        }
+                    });
+                    if (!response.ok) throw new Error('Failed to fetch chats');
+                    const data = await response.json();
+                    setChats(data);
+                } catch (error) {
+                    console.error('Error fetching chats:', error);
+                }
+            }
+        }
+        fetchChats();
+    }, [session?.user?.id]);
 
     const deleteChat = async (chat_id: string) => {
         try {
@@ -25,6 +49,7 @@ export default function LeftMenu({chats}: {chats: Chat[]}) {
             });
             
             if (!response.ok) throw new Error('Failed to delete chat');
+            setChats(chats.filter(chat => chat.id !== chat_id));
             router.refresh();
         } catch (error) {
             console.error('Error deleting chat:', error);
@@ -32,11 +57,11 @@ export default function LeftMenu({chats}: {chats: Chat[]}) {
     };
 
     const filteredChats = chats.filter(chat => 
-        chat.topic.toLowerCase().includes(searchTerm.toLowerCase())
+        chat.topic?.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return (
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full bg-gray-100">
             <div className="p-2">
                 <Link href="/" className="w-full block">
                     <Button 
