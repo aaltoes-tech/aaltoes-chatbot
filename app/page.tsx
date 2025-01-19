@@ -64,7 +64,6 @@ export default function Page() {
                                     <WelcomeInput />
                                 </div>
                             </div>
-                            <Quota />
                         </div>
                     </div>
                 </div>

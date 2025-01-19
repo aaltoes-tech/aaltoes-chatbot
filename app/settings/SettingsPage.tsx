@@ -20,7 +20,7 @@ import { useForm } from "react-hook-form";
 import { updateProfile } from "./actions";
 import { Settings, User as UserIcon } from "lucide-react";
 import NavBar from "../../components/NavBar";
-
+import Quota from "../../components/quota";
 interface SettingsPageProps {
   user: User;
 }
@@ -116,6 +116,7 @@ export default function SettingsPage({ user }: SettingsPageProps) {
             </form>
           </Form>
         </div>
+        <Quota />
       </div>
     </main>
   );
