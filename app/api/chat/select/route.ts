@@ -15,10 +15,11 @@ export async function GET(req: Request) {
             },
             select: {
                 id: true,
-                topic: true
+                topic: true,
+                updated_at: true
             },
             orderBy: {
-                created_at: 'desc'
+                updated_at: 'desc'
             }
         });
 

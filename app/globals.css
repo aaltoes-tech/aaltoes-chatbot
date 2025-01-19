@@ -38,31 +38,7 @@
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    color-scheme: dark;
   }
 }
 
@@ -73,4 +49,190 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Dark mode text colors - ensure ALL text is light */
+.dark {
+  --tw-text-opacity: 1;
+  color: rgb(243 244 246 / var(--tw-text-opacity));
+}
+
+/* Force all text elements to be light */
+.dark *:not(svg):not(button.bg-blue-500):not(a.bg-blue-500) {
+  color: rgb(243 244 246 / var(--tw-text-opacity)) !important;
+}
+
+/* Secondary text slightly dimmer */
+.dark .text-gray-500,
+.dark .text-gray-600,
+.dark .text-xs {
+  color: rgb(209 213 219 / var(--tw-text-opacity)) !important; /* gray-300 */
+}
+
+/* Specific colors that should remain */
+.dark .text-red-600 {
+  color: rgb(239 68 68 / var(--tw-text-opacity)) !important; /* red-500 */
+}
+
+.dark .text-blue-600 {
+  color: rgb(96 165 250 / var(--tw-text-opacity)) !important; /* blue-400 */
+}
+
+/* Button text colors */
+.dark a.bg-blue-500,
+.dark button.bg-blue-500,
+.dark a .hover\:bg-blue-600:hover,
+.dark button.hover\:bg-blue-600:hover {
+  color: rgb(147 197 253 / var(--tw-text-opacity)) !important; /* blue-300 */
+}
+
+/* Background colors */
+.dark .bg-white,
+.dark .bg-gray-50,
+.dark .bg-gray-100,
+.dark .bg-gray-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity)); /* gray-900 */
+}
+
+/* Navbar and header backgrounds */
+.dark nav,
+.dark header {
+  --tw-bg-opacity: 1;
+  background-color: rgb(31 41 55 / var(--tw-bg-opacity))
+}
+
+/* Menu button specific styles */
+
+
+.dark [role="menubutton"]:hover {
+  background-color: rgb(31 41 55 / var(--tw-bg-opacity)) !important;
+}
+
+/* Input styles */
+.dark input,
+.dark select,
+.dark textarea {
+  --tw-bg-opacity: 1;
+  background-color: rgb(31 41 55 / var(--tw-bg-opacity)); /* gray-800 */
+  border-color: rgb(75 85 99 / var(--tw-border-opacity)); /* gray-600 */
+}
+
+/* Hover states */
+.dark .hover\:bg-gray-50:hover,
+.dark .hover\:bg-gray-100:hover,
+.dark .hover\:bg-gray-200:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(31 41 55 / var(--tw-bg-opacity)); /* gray-800 */
+}
+
+/* Links */
+.dark .text-blue-600 {
+  color: rgb(96 165 250 / var(--tw-text-opacity)); /* blue-400 */
+}
+
+.dark .hover\:text-blue-800:hover {
+  color: rgb(147 197 253 / var(--tw-text-opacity)); /* blue-300 */
+}
+
+/* Dropdown menu */
+.dark [role="menu"] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+  border-color: rgb(75 85 99 / var(--tw-border-opacity));
+}
+
+/* Borders */
+.dark .border,
+.dark .border-gray-100,
+.dark .border-gray-200 {
+  border-color: rgb(75 85 99 / var(--tw-border-opacity)); /* gray-600 */
+}
+
+/* Icon colors in dark mode */
+.dark svg,
+.dark .text-gray-400 svg,
+.dark .text-gray-500 svg {
+  color: rgb(209 213 219 / var(--tw-text-opacity)); /* gray-300 */
+}
+
+/* Menu icons */
+.dark [role="menu"] svg {
+  color: rgb(209 213 219 / var(--tw-text-opacity)); /* gray-300 */
+}
+
+/* Keep red icon for logout */
+.dark .text-red-600 svg {
+  color: rgb(239 68 68 / var(--tw-text-opacity)); /* red-500 */
+}
+
+/* Blue icons */
+.dark .text-blue-500 svg {
+  color: rgb(96 165 250 / var(--tw-text-opacity)); /* blue-400 */
+}
+
+/* Search icon and other utility icons */
+.dark .text-gray-400 svg {
+  color: rgb(156 163 175 / var(--tw-text-opacity)); /* gray-400 */
+}
+
+/* Icon backgrounds in dark mode */
+.dark .bg-blue-50 {
+  background-color: rgb(30 58 138 / 0.3); /* darker blue bg */
+}
+
+.dark .bg-gray-50 {
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity)); /* gray-900 */
+}
+
+/* Icon container hover states */
+.dark .hover\:bg-gray-100,
+.dark button:hover {
+  background-color: rgb(31 41 55 / var(--tw-bg-opacity)) !important; /* gray-800 */
+}
+
+/* Menu button hover */
+.dark .hover\:bg-gray-100:hover {
+  background-color: rgb(31 41 55 / var(--tw-bg-opacity)); /* gray-800 */
+}
+
+/* Icon backgrounds in user menu */
+.dark [role="menu"] .bg-gray-50,
+.dark [role="menu"] .bg-gray-100 {
+  background-color: rgb(31 41 55 / var(--tw-bg-opacity)); /* gray-800 */
+}
+
+/* Chat messages */
+.dark .bg-blue-500 {  /* User messages */
+  background: transparent;
+}
+
+/* New Chat button in dark mode */
+.dark a .bg-blue-500,
+.dark button.bg-blue-500 {
+  background-color: rgb(30 58 138 / 0.3); /* Same as icon bg */
+  border: 1px solid rgb(30 58 138 / 0.5);
+  color: rgb(147 197 253 / var(--tw-text-opacity)); /* blue-300 */
+}
+
+.dark a .hover\:bg-blue-600:hover,
+.dark button.hover\:bg-blue-600:hover {
+  background-color: rgb(30 58 138 / 0.4); /* Slightly darker on hover */
+  border-color: rgb(30 58 138 / 0.6);
+  color: rgb(147 197 253 / var(--tw-text-opacity)); /* blue-300 */
+}
+
+/* Menu button hover states */
+.dark [role="menubutton"]:hover {
+  background-color: rgb(31 41 55 / var(--tw-bg-opacity)) !important; /* gray-800 */
+}
+
+/* Role badge in admin page */
+.dark .bg-blue-100 {
+  background-color: rgb(59 130 246 / 0.15); /* Lighter blue background */
+  color: rgb(147 197 253 / var(--tw-text-opacity)); /* blue-300 */
+}
+
+.dark .text-blue-800 {
+  color: rgb(191 219 254 / var(--tw-text-opacity)) !important; /* blue-200 - even lighter text */
 }

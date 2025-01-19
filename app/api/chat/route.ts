@@ -10,9 +10,20 @@ const openaiClient = createOpenAI({
 });
 
 export async function POST(req: Request) {
+    const session = await getSession();
+    const user = session?.user;
+
+    if (!session || !user) {
+        return new Response(JSON.stringify({
+            error: 'Unauthorized',
+            message: 'You must be signed in to use the chat'
+        }), { 
+            status: 401,
+            headers: { 'Content-Type': 'application/json' }
+        });
+    }
+
     try {
-        const session = await getSession();
-        const user = session?.user;
         const { messages } = await req.json();
         const chatId = req.headers.get('chat_id');
         const model = req.headers.get('model') as string;
@@ -28,11 +39,20 @@ export async function POST(req: Request) {
             });
         }
 
-        if (!session || !user) {
-            return Response.redirect(
-                `${process.env.NEXTAUTH_URL}/auth/signin?callbackUrl=/chat/${chatId}`,
-                302
-            );
+        // Verify chat belongs to user
+        const chat = await prisma.chat.findUnique({
+            where: { id: chatId },
+            select: { user_id: true }
+        });
+
+        if (!chat || chat.user_id !== user.id) {
+            return new Response(JSON.stringify({
+                error: 'Unauthorized',
+                message: 'You do not have access to this chat'
+            }), { 
+                status: 403,
+                headers: { 'Content-Type': 'application/json' }
+            });
         }
 
         const user_quota = await prisma.user.findUnique({
@@ -85,7 +105,11 @@ export async function POST(req: Request) {
             const stream = await streamText({
                 model: openaiClient(model),
                 messages: [...messages],
-                temperature: 1,
+                temperature: 0.6,
+                maxTokens: 500,
+                frequencyPenalty: 0.5,
+                presencePenalty: 0.5,
+          
                 async onFinish({finishReason, usage, text}) {
                     if (chatId && user.id) {
                         const encoding = encodingForModel(model as TiktokenModel);
@@ -98,6 +122,11 @@ export async function POST(req: Request) {
                                 content: text,
                                 chat_id: chatId,
                             }
+                        });
+
+                        await prisma.chat.update({
+                            where: { id: chatId },
+                            data: {   updated_at : new Date() }
                         });
 
                         const updatedUser = await prisma.user.update({

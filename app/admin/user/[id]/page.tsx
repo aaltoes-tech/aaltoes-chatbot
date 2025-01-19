@@ -6,6 +6,7 @@ import UpdatePage from "./UpdatePage";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import getSession from "../../../../lib/getSession";
+import NavBar from "../../../../components/NavBar";
 
 interface PageProps {
   params: { id: string };
@@ -49,7 +50,9 @@ export default async function Page({ params: { id } }: PageProps) {
 
   }else{
     return (
-      <div className="mx-3 my-10 flex flex-col items-center gap-3">
+      <main>
+        <NavBar />
+        <div className="mx-3 my-10 flex flex-col items-center gap-3">
             <UpdatePage user={{
                 id: user.id,
                 name: user.name ?? '',
@@ -59,6 +62,7 @@ export default async function Page({ params: { id } }: PageProps) {
                 createdAt: user.createdAt
             }}/>
           </div>
-      );
+      </main>
+    );
   }
 }

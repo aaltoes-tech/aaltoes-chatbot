@@ -48,7 +48,7 @@ export default function Quota() {
                     </div>
                     <div className="text-right">
                         <span className="text-2xl font-semibold text-blue-600">
-                            ${(quota?.quota || 0).toFixed(2)}
+                            ${(quota?.quota || 0).toFixed(5)}
                         </span>
                     </div>
                 </div>

@@ -19,6 +19,7 @@ import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { updateProfile } from "./actions";
 import { Settings, User as UserIcon } from "lucide-react";
+import NavBar from "../../components/NavBar";
 
 interface SettingsPageProps {
   user: User;
@@ -47,8 +48,9 @@ export default function SettingsPage({ user }: SettingsPageProps) {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 py-10">
-      <div className="max-w-2xl mx-auto px-4">
+    <main>
+      <NavBar />
+      <div className="max-w-2xl mx-auto px-4 mx-3 my-10">
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
           {/* Header */}
           <div className="flex items-center gap-3 mb-8 pb-6 border-b">
