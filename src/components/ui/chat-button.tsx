@@ -71,7 +71,7 @@ export function ChatButton({ id, topic, onDelete, onClick }: ChatButtonProps) {
 
 export function NewChatButton() {
   return (
-    <ButtonLink size="icon" variant="ghost" href="/" className="h-8 w-8">
+    <ButtonLink title="Create New Chat" size="icon" variant="ghost" href="/" className="h-8 w-8">
       <SquarePen aria-hidden className="!h-5 !w-5" />
       <span className="sr-only">New Chat</span>
     </ButtonLink>

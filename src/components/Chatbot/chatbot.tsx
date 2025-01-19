@@ -112,12 +112,12 @@ function Chatbot({
               onKeyDown={handleKeyDown}
               onChange={handleInputChange}
               placeholder="Type your message here..."
-              className="min-h-[100px] w-full resize-none rounded-lg border bg-gray-50 p-4 pr-12 text-base text-gray-800 placeholder-gray-400 transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 md:text-lg"
+              className="min-h-[100px] w-full resize-none rounded-lg border bg-muted p-4 pr-12 text-base text-foreground placeholder-muted-foreground transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 md:text-lg"
             />
             <button
               type="submit"
               disabled={!input.trim() || isLoading}
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-gray-500 transition-colors hover:text-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-muted-foreground transition-colors hover:text-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
               title="Send message"
             >
               <Send className="h-6 w-6" />
@@ -128,7 +128,7 @@ function Chatbot({
               <button
                 type="button"
                 onClick={stop}
-                className="rounded-lg bg-gray-100 p-3 text-gray-500 transition-colors hover:bg-gray-200 hover:text-red-500"
+                className="rounded-lg bg-muted p-3 text-gray-500 transition-colors hover:bg-gray-200 hover:text-red-500"
                 title="Stop generating"
               >
                 <Square className="h-6 w-6" />
@@ -138,7 +138,7 @@ function Chatbot({
                 type="button"
                 onClick={() => reload()}
                 disabled={!messages.length}
-                className="rounded-lg bg-gray-100 p-3 text-gray-500 transition-colors hover:bg-gray-200 hover:text-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
+                className="rounded-lg bg-muted p-3 text-gray-500 transition-colors hover:bg-gray-200 hover:text-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
                 title="Regenerate response"
               >
                 <RotateCw className="h-6 w-6" />

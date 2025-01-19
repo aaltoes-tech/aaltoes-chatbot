@@ -72,17 +72,17 @@ export default function WelcomeInput() {
 
   return (
     <div className="mx-auto w-full max-w-3xl px-4">
-      <div className="relative rounded-xl border border-gray-100 bg-white p-8 shadow-sm">
+      <div className="relative rounded-xl border border-border bg-background p-8 shadow-sm">
         <div className="mb-6 flex items-center justify-center">
-          <div className="rounded-full bg-blue-50 p-3">
+          <div className="rounded-full bg-muted p-3">
             <MessageSquare className="h-6 w-6 text-blue-500" />
           </div>
         </div>
 
-        <h1 className="mb-2 text-center text-2xl font-semibold text-gray-800">
+        <h1 className="mb-2 text-center text-2xl font-semibold text-foreground">
           How can I help you today?
         </h1>
-        <p className="mb-6 text-center text-sm text-gray-500">
+        <p className="mb-6 text-center text-sm text-muted-foreground">
           Ask me anything - I&apos;m here to assist with your questions
         </p>
 
@@ -91,7 +91,7 @@ export default function WelcomeInput() {
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="Type your message here..."
-            className="min-h-[100px] w-full resize-none rounded-lg border border-gray-200 bg-gray-50 p-4 pr-12 text-gray-800 placeholder-gray-400 transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="min-h-[100px] w-full resize-none rounded-lg border border-border bg-muted p-4 pr-12 text-foreground placeholder-muted-foreground transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
@@ -102,14 +102,14 @@ export default function WelcomeInput() {
           <button
             type="submit"
             disabled={!content.trim()}
-            className="absolute bottom-3 right-3 rounded-lg p-2 text-gray-400 transition-all duration-200 hover:bg-blue-50 hover:text-blue-500 disabled:cursor-not-allowed disabled:opacity-40"
+            className="absolute bottom-3 right-3 rounded-lg p-2 text-muted-foreground transition-all duration-200 hover:bg-blue-50 hover:text-blue-500 disabled:cursor-not-allowed disabled:opacity-40"
             title="Send message"
           >
             <Send className="h-5 w-5" />
           </button>
         </form>
 
-        <div className="mt-4 text-center text-xs text-gray-400">
+        <div className="mt-4 text-center text-xs text-muted-foreground">
           Press Enter to send • Shift + Enter for new line
         </div>
       </div>
