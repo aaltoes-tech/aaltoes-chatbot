@@ -39,14 +39,17 @@ function Chatbot({
     stop,
     reload,
   } = useChat({
+    id: chatId,
     api: "/api/chat",
     headers: {
       model: selectedModel,
-      chat_id: chatId,
       num_messages: messageCountRef.current.toString(),
     },
+    body: {
+      id: chatId,
+    },
+    initialMessages: initialMessages,
     experimental_throttle: 50,
-    initialMessages,
     onFinish: () => {
       messageCountRef.current = messages.length + 1;
     },
@@ -58,12 +61,6 @@ function Chatbot({
       });
     },
   });
-
-  useEffect(() => {
-    if (messages.length === 1) {
-      reload();
-    }
-  }, [messages]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });

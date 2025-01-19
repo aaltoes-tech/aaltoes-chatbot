@@ -1,11 +1,21 @@
 import prisma from "../../../../lib/prisma";
 import getSession from "../../../../lib/getSession";
+import { z } from "zod";
+
+const reqSchema = z.object({
+    chatId: z.string(),
+    content: z.string()
+});
 
 export async function POST(req: Request) {
     try {
+        const body = reqSchema.safeParse(await req.json());
+        if (!body.success) {
+            return new Response(JSON.stringify(body.error.errors), { status: 400 });
+        }
+        const { chatId, content } = body.data;
         const session = await getSession();
         const user = session?.user;
-        const content = req.headers.get('content') as string;
         
         if (!session?.user) {
             return new Response('Unauthorized', { status: 401 });
@@ -13,6 +23,7 @@ export async function POST(req: Request) {
 
         const new_chat = await prisma.chat.create({
             data: {
+                id: chatId,
                 user: {
                     connect: {
                         id: user?.id

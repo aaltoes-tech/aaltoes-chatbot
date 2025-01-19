@@ -1,14 +1,38 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Send, MessageSquare } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { useChat } from "ai/react";
+import cuid from "cuid";
 
 export default function WelcomeInput() {
   const { data: session } = useSession();
   const [content, setContent] = useState("");
   const router = useRouter();
+
+  const [id, setId] = useState(() => cuid());
+  useEffect(() => {
+    setId(cuid());
+  }, []);
+
+  const [selectedModel, setSelectedModel] = useState(
+    session?.user?.model || "gpt-4o-mini",
+  );
+
+  const { append } = useChat({
+    id: id,
+    api: "/api/chat",
+    headers: {
+      model: selectedModel,
+      num_messages: "0",
+    },
+    body: {
+      id: id
+    },
+    initialMessages: [],
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,16 +44,20 @@ export default function WelcomeInput() {
       try {
         const response = await fetch("/api/chat/create", {
           method: "POST",
+          body: JSON.stringify({ chatId: id, content: content }),
           headers: {
             "Content-Type": "application/json",
-            content: content,
           },
         });
 
         if (!response.ok) throw new Error("Failed to create chat");
 
-        const { chat_id } = await response.json();
-        router.push(`/chat/${chat_id}`);
+        append({
+          role: "user",
+          content: content,
+          id: id,
+        });
+        router.push(`/chat/${id}`);
       } catch (error) {
         console.error("Error creating chat:", error);
       }
