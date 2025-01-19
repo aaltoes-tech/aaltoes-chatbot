@@ -105,7 +105,7 @@ export async function POST(req: Request) {
             const stream = await streamText({
                 model: openaiClient(model),
                 messages: [...messages],
-                temperature: 0.6,
+                temperature: 0.7,
                 frequencyPenalty: 0.5,
                 presencePenalty: 0.5,
           
