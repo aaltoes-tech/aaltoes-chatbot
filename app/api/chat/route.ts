@@ -106,7 +106,6 @@ export async function POST(req: Request) {
                 model: openaiClient(model),
                 messages: [...messages],
                 temperature: 0.6,
-                maxTokens: 500,
                 frequencyPenalty: 0.5,
                 presencePenalty: 0.5,
           
