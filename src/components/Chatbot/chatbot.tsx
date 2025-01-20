@@ -72,7 +72,7 @@ function Chatbot({
   const { open, openMobile, isMobile } = useSidebar();
 
   return (
-    <div className="flex h-full w-full flex-col overflow-hidden">
+    <div className="flex h-full w-full flex-col overflow-hidden ">
       <div className={cn(
         "flex justify-center overflow-y-auto bg-background",
         isMobile ? "h-[calc(100vh-180px)]" : "h-[85%] flex-1"
@@ -102,7 +102,7 @@ function Chatbot({
 
       <div className={cn(
         "bg-card",
-        isMobile ? "fixed bottom-0 left-0 right-0 p-2" : "h-[15% p-4 pb-6 md:pb-8"
+        isMobile ? "fixed bottom-[15px] left-0 right-0 " : "h-[15% p-4 pb-6 md:pb-8"
       )}>
         <form
           onSubmit={handleSubmit}
@@ -111,12 +111,12 @@ function Chatbot({
             isMobile ? "mx-2" : "mx-auto max-w-5xl"
           )}
         >
+          
+          <div className="relative flex-1 border-t border-border">
+          
           {isMobile && (
-            <div className="absolute -top-10 right-0 z-10">
-              <SelectModel />
-            </div>
+              <div className="mx-0.5 my-2"><SelectModel /></div>
           )}
-          <div className="relative flex-1">
             <Textarea
               value={input}
               onKeyDown={handleKeyDown}
