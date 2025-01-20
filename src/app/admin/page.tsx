@@ -16,14 +16,14 @@ export default async function Page() {
 
   if (user.role !== "Admin") {
     return (
-      <main className="min-h-screen bg-gray-50 py-10">
+      <main className="min-h-screen  py-10">
         <div className="max-w-2xl mx-auto px-4">
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
-            <div className="flex items-center gap-3 text-red-500">
+          <div className="bg-white rounded-xl shadow-sm border  p-8">
+            <div className="flex items-center gap-3 t">
               <Shield className="w-6 h-6" />
               <h1 className="text-xl font-semibold">Access Denied</h1>
             </div>
-            <p className="mt-4 text-gray-600">
+            <p className="mt-4 ">
               You do not have permission to access this page.
             </p>
           </div>
