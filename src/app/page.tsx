@@ -6,7 +6,7 @@ import NavBar from "../components/NavBar";
 
 export default function Page() {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-full">
       {/* Mobile Menu Button */}
       <NavBar />
       <div className="flex-1 overflow-auto">

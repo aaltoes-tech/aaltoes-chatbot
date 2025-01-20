@@ -16,6 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 
+
 interface UserButtonProps {
   user: User 
 }
@@ -32,7 +33,7 @@ export default function UserButton({ user }: UserButtonProps) {
       <DropdownMenuTrigger asChild>
         <Button 
           variant="ghost" 
-          className="flex items-center gap-2 h-auto p-2 hover:bg-gray-100 border-0 ring-0 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+          className="flex items-center gap-2 h-auto p-2 hover:bg-accent"
         >
           <div className="w-8 h-8 relative">
             <Image
@@ -42,59 +43,61 @@ export default function UserButton({ user }: UserButtonProps) {
               className="rounded-full object-cover"
             />
           </div>
-          <div className="hidden md:block text-left">
-            <div className="font-medium text-sm">{user.name}</div>
-            <div className="text-xs text-gray-500">{user.email}</div>
+
+          <div className="text-left hidden md:block">
+            <div className="font-medium text-sm text-foreground">{user.name}</div>
+            <div className="text-xs text-muted-foreground">{user.email}</div>
           </div>
+
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent 
-        className="w-64 border-0 shadow-lg focus:ring-0 focus-visible:ring-0" 
+        className="w-64" 
         align="end"
         alignOffset={4}
       >
         <div className="px-2 py-2.5 md:hidden">
-          <div className="font-medium text-sm">{user.name}</div>
-          <div className="text-xs text-gray-500">{user.email}</div>
+          <div className="font-medium text-sm text-foreground">{user.name}</div>
+          <div className="text-xs text-muted-foreground">{user.email}</div>
         </div>
-        <DropdownMenuGroup className="p-1">
+        <DropdownMenuGroup className="p-1 ">
           <DropdownMenuItem asChild className="focus:ring-0 focus-visible:ring-0">
-            <Link href="/" className="flex items-center gap-2 px-2 py-2 cursor-pointer hover:bg-gray-50 focus:outline-none">
-              <Home className="h-4 w-4 text-gray-500" />
+            <Link href="/" className="flex items-center gap-2 px-2 py-2 cursor-pointer">
+              <Home className="h-4 w-4 text-muted-foreground" />
               <span>Home</span>
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem asChild className="focus:ring-0 focus-visible:ring-0">
-            <Link href="/settings" className="flex items-center gap-2 px-2 py-2 cursor-pointer hover:bg-gray-50 focus:outline-none">
-              <Settings className="h-4 w-4 text-gray-500" />
+          <DropdownMenuItem asChild>
+            <Link href="/settings" className="flex items-center gap-2 px-2 py-2 cursor-pointer">
+              <Settings className="h-4 w-4 text-muted-foreground" />
               <span>Settings</span>
             </Link>
           </DropdownMenuItem>
           {user.role === "Admin" && (
-            <DropdownMenuItem asChild className="focus:ring-0 focus-visible:ring-0">
-              <Link href="/admin" className="flex items-center gap-2 px-2 py-2 cursor-pointer hover:bg-gray-50 focus:outline-none">
-                <Lock className="h-4 w-4 text-gray-500" />
+            <DropdownMenuItem asChild>
+              <Link href="/admin" className="flex items-center gap-2 px-2 py-2 cursor-pointer">
+                <Lock className="h-4 w-4 text-muted-foreground" />
                 <span>Admin Panel</span>
               </Link>
             </DropdownMenuItem>
           )}
           <DropdownMenuItem 
             onClick={toggleTheme}
-            className="flex items-center gap-2 px-2 py-2 cursor-pointer hover:bg-gray-50 focus:outline-none"
+            className="flex items-center gap-2 px-2 py-2 cursor-pointer"
           >
             {theme === 'dark' ? (
-              <Sun className="h-4 w-4 text-gray-500" />
+              <Sun className="h-4 w-4 text-muted-foreground" />
             ) : (
-              <Moon className="h-4 w-4 text-gray-500" />
+              <Moon className="h-4 w-4 text-muted-foreground" />
             )}
             <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
-        <DropdownMenuSeparator className="bg-gray-100" />
+        <DropdownMenuSeparator />
         <div className="p-1">
           <DropdownMenuItem 
             onClick={() => signOut({ callbackUrl: "/" })}
-            className="flex items-center gap-2 px-2 py-2 text-red-600 hover:bg-red-50 focus:ring-0 focus-visible:ring-0 focus:outline-none"
+            className="flex items-center gap-2 px-2 py-2 text-destructive focus:text-destructive"
           >
             <LogOut className="h-4 w-4" />
             <span>Sign out</span>

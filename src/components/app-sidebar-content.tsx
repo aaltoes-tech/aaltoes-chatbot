@@ -32,8 +32,6 @@ const fetchChats = async ({ userId }: { userId: string }) => {
     console.error(chats.error.errors);
     return [];
   }
-  console.log(chats.data);
-
   return chats.data;
 };
 
@@ -41,8 +39,9 @@ export function AppSidebarContent() {
   const { data: session } = useSession();
 
   return (
-    <SidebarContent>
+    <SidebarContent className="bg-card  border-border flex flex-col h-[calc(100vh-3.5rem)]">
       {session && session.user.id && <ChatsList userId={session.user.id} />}
+      {!session ? <p className="p-4 text-muted-foreground">Please login to view your chats</p> : null}
       <SidebarGroup />
     </SidebarContent>
   );
@@ -71,38 +70,43 @@ const ChatsList = ({ userId }: { userId: string }) => {
   }, [chats, searchTerm]);
 
   if (status === "pending") {
-    return <p>Loading...</p>;
+    return <p className="p-4 text-muted-foreground">Loading...</p>;
   }
 
   if (status === "error") {
-    return <p>Error loading chats</p>;
+    return <p className="p-4 text-destructive">Error loading chats</p>;
   }
 
   return (
-    <SidebarGroup>
-      <div className="relative mb-4">
-        <Input
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Search chats"
-          className="pl-11"
-        />
-        <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 transform text-muted-foreground" />
+    <SidebarGroup className="flex flex-col h-full overflow-hidden">
+      <div className="flex-none p-2">
+        <div className="relative">
+          <Input
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search chats"
+            className="pl-11 bg-background text-foreground placeholder:text-muted-foreground border-border"
+          />
+          <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 transform text-muted-foreground" />
+        </div>
       </div>
-      {filteredChats.map((chat) => (
-        <ChatButton
-          key={chat.id}
-          id={chat.id}
-          topic={chat.topic}
-          onClick={() => setOpenMobile(false)}
-          onDelete={(id) => {
-            if (pathname === `/chat/${id}`) {
-              router.push("/");
-            }
-          }
-          }
-        />
-      ))}
+      <div className="flex-1 p-2 space-y-1 overflow-y-auto">
+        {filteredChats.length === 0 ? <p className="p-4 text-muted-foreground">No chats found</p> : null}
+        
+        {filteredChats.map((chat) => (
+          <ChatButton
+            key={chat.id}
+            id={chat.id}
+            topic={chat.topic}
+            onClick={() => setOpenMobile(false)}
+            onDelete={(id) => {
+              if (pathname === `/chat/${id}`) {
+                router.push("/");
+              }
+            }}
+          />
+        ))}
+      </div>
     </SidebarGroup>
   );
 };

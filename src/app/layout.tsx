@@ -10,6 +10,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Providers } from "@/components/providers";
+import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning className="h-full">
       <head>
         <link
           rel="stylesheet"
@@ -38,10 +39,18 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
       </head>
-      <body className={inter.className + " overflow-hidden"}>
+      <body className={cn(
+        inter.className,
+        "h-full overflow-hidden bg-background font-sans antialiased",
+        "border-border"
+      )}>
         <Providers>
-          <AppSidebar />
-          <main className="w-full">{children}</main>
+          <main className="flex h-full w-full">
+            <AppSidebar />
+            <div className="flex-1 flex flex-col overflow-hidden">
+                {children}    
+            </div>
+          </main>
           <Toaster />
         </Providers>
       </body>

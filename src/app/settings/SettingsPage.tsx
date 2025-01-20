@@ -21,6 +21,7 @@ import { updateProfile } from "./actions";
 import { Settings, User as UserIcon } from "lucide-react";
 import NavBar from "../../components/NavBar";
 import Quota from "../../components/quota";
+
 interface SettingsPageProps {
   user: User;
 }
@@ -48,18 +49,18 @@ export default function SettingsPage({ user }: SettingsPageProps) {
   }
 
   return (
-    <main>
+    <main className="bg-background">
       <NavBar />
-      <div className="max-w-2xl mx-auto px-4 mx-3 my-10">
-        <div className="rounded-xl shadow-sm border p-8">
+      <div className="max-w-2xl mx-auto px-4 my-10">
+        <div className="bg-card rounded-xl shadow-sm border border-border p-8">
           {/* Header */}
-          <div className="flex items-center gap-3 mb-8 pb-6">
-            <div className="p-2  rounded-lg">
-              <Settings className="w-5 h-5" />
+          <div className="flex items-center gap-3 mb-8 pb-6 border-b border-border">
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <Settings className="w-5 h-5 text-primary" />
             </div>
             <div>
-              <h1 className="text-2xl font-semibold ">Settings</h1>
-              <p className="text-sm  mt-1">
+              <h1 className="text-2xl font-semibold text-foreground">Settings</h1>
+              <p className="text-sm text-muted-foreground mt-1">
                 Manage your account preferences
               </p>
             </div>
@@ -67,13 +68,13 @@ export default function SettingsPage({ user }: SettingsPageProps) {
 
           {/* User Info Section */}
           <div className="mb-8">
-            <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
-              <div className="p-2 bg-white rounded-full shadow-sm">
-                <UserIcon className="w-5 h-5 text-gray-600" />
+            <div className="flex items-center gap-4 p-4 bg-muted/50 rounded-lg">
+              <div className="p-2 bg-background rounded-full shadow-sm">
+                <UserIcon className="w-5 h-5 text-muted-foreground" />
               </div>
               <div>
-                <p className="text-sm font-medium text-gray-900">{user.email}</p>
-                <p className="text-xs text-gray-500">Account Email</p>
+                <p className="text-sm font-medium text-foreground">{user.email}</p>
+                <p className="text-xs text-muted-foreground/80">Account Email</p>
               </div>
             </div>
           </div>
@@ -89,18 +90,18 @@ export default function SettingsPage({ user }: SettingsPageProps) {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-700">Display Name</FormLabel>
+                    <FormLabel>Display Name</FormLabel>
                     <FormControl>
                       <Input 
                         placeholder="Enter your display name" 
                         {...field}
-                        className="border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                        className="bg-background"
                       />
                     </FormControl>
-                    <FormDescription className="text-gray-500 text-sm">
+                    <FormDescription>
                       This is your public display name
                     </FormDescription>
-                    <FormMessage className="text-red-500" />
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -108,7 +109,7 @@ export default function SettingsPage({ user }: SettingsPageProps) {
                 <Button
                   type="submit"
                   disabled={form.formState.isSubmitting}
-                  className="w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white"
+                  className="w-full sm:w-auto"
                 >
                   {form.formState.isSubmitting ? "Saving..." : "Save Changes"}
                 </Button>

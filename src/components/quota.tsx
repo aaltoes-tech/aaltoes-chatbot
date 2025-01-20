@@ -36,27 +36,27 @@ export default function Quota() {
 
     return (
         <div className="max-w-3xl mx-auto w-full mb-6 t-10 py-6">
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
+            <div className="bg-card rounded-xl shadow-sm border p-4 border-border">
                 <div className="flex flex-col gap-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                            <div className="p-2 bg-blue-50 rounded-lg">
-                                <Coins className="w-5 h-5 text-blue-500" />
+                            <div className="p-2 bg-primary/10 rounded-lg">
+                                <Coins className="w-5 h-5 text-primary" />
                             </div>
                             <div>
-                                <h3 className="text-sm font-medium text-gray-900">Available Credits</h3>
-                                <p className="text-xs text-gray-500">Remaining balance for AI interactions</p>
+                                <h3 className="text-sm font-medium text-foreground">Available Credits</h3>
+                                <p className="text-xs text-muted-foreground">Remaining balance for AI interactions</p>
                             </div>
                         </div>
                         <div className="text-right">
-                            <span className="text-2xl font-semibold text-blue-600">
+                            <span className="text-2xl font-semibold text-primary">
                                 ${(quota?.quota || 0).toFixed(5)}
                             </span>
                         </div>
                     </div>
                     <Button 
                         variant="outline" 
-                        className="w-full"
+                        className="w-full hover:bg-accent hover:text-accent-foreground"
                         onClick={() => window.location.href = "mailto:admin@aaltoes.com?subject=Aaltoes%20ChatBot:%20Quota%20Request"}
                     >
                         Request More Credits

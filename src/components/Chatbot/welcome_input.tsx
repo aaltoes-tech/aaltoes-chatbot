@@ -72,10 +72,10 @@ export default function WelcomeInput() {
 
   return (
     <div className="mx-auto w-full max-w-3xl px-4">
-      <div className="relative rounded-xl border border-border bg-background p-8 shadow-sm">
+      <div className="relative rounded-xl border border-border bg-card p-8 shadow-sm">
         <div className="mb-6 flex items-center justify-center">
-          <div className="rounded-full bg-muted p-3">
-            <MessageSquare className="h-6 w-6 text-blue-500" />
+          <div className="rounded-full bg-primary/10 p-3">
+            <MessageSquare className="h-6 w-6 text-primary" />
           </div>
         </div>
 
@@ -91,7 +91,7 @@ export default function WelcomeInput() {
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="Type your message here..."
-            className="min-h-[100px] w-full resize-none rounded-lg border border-border bg-muted p-4 pr-12 text-foreground placeholder-muted-foreground transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="min-h-[100px] w-full resize-none rounded-lg border border-border bg-background p-4 pr-12 text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
@@ -102,7 +102,7 @@ export default function WelcomeInput() {
           <button
             type="submit"
             disabled={!content.trim()}
-            className="absolute bottom-3 right-3 rounded-lg p-2 text-muted-foreground transition-all duration-200 hover:bg-blue-50 hover:text-blue-500 disabled:cursor-not-allowed disabled:opacity-40"
+            className="absolute bottom-3 right-3 rounded-lg p-2 text-muted-foreground transition-colors hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
             title="Send message"
           >
             <Send className="h-5 w-5" />

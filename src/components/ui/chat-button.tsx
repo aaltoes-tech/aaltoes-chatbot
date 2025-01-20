@@ -10,6 +10,7 @@ interface ChatButtonProps {
   topic: string | null;
   onDelete?: (id: string) => void;
   onClick?: () => void;
+  isMobile?: boolean;
 }
 
 const deleteChat = async (chatId: string) => {
@@ -23,7 +24,7 @@ const deleteChat = async (chatId: string) => {
   if (!response.ok) throw new Error("Failed to delete chat");
 };
 
-export function ChatButton({ id, topic, onDelete, onClick }: ChatButtonProps) {
+export function ChatButton({ id, topic, onDelete, onClick, isMobile = false }: ChatButtonProps) {
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -45,15 +46,15 @@ export function ChatButton({ id, topic, onDelete, onClick }: ChatButtonProps) {
   });
 
   return (
-    <div className={cn("group relative", buttonVariants({ variant: "ghost" }))}>
-      <MessageSquare className="!h-4 !w-4 text-muted-foreground" />
+    <div className={cn("group relative flex items-center w-full", buttonVariants({ variant: "ghost" }))}>
+      <MessageSquare className="!h-4 !w-4 shrink-0 text-muted-foreground" />
       <Link
         href={`/chat/${id}`}
         onClick={onClick}
-        className="flex-1 ml-1 truncate text-sm text-gray-600 group-hover:text-gray-900"
+        className="flex-1 ml-1 text-sm text-muted-foreground group-hover:text-foreground truncate ..."
         title={topic ?? "New Chat"}
       >
-        <div className="">{topic || "New Chat"}</div>
+        <div className="truncate ">{topic || "New Chat"}</div>
         <span className="absolute inset-0"></span>
       </Link>
       <button
@@ -61,7 +62,7 @@ export function ChatButton({ id, topic, onDelete, onClick }: ChatButtonProps) {
           e.stopPropagation();
           deleteChatMutation.mutate(id);
         }}
-        className="z-10 p-1 text-gray-400 opacity-0 transition-all hover:text-red-500 group-hover:opacity-100"
+        className="z-10 p-1 shrink-0 text-muted-foreground opacity-0 transition-all hover:text-destructive group-hover:opacity-100"
         title="Delete chat"
       >
         <Trash2 size={16} />
@@ -72,8 +73,14 @@ export function ChatButton({ id, topic, onDelete, onClick }: ChatButtonProps) {
 
 export function NewChatButton() {
   return (
-    <ButtonLink title="Create New Chat" size="icon" variant="ghost" href="/" className="h-8 w-8">
-      <SquarePen aria-hidden className="!h-5 !w-5" />
+    <ButtonLink 
+      title="Create New Chat" 
+      size="icon" 
+      variant="ghost" 
+      href="/" 
+      className="h-8 w-8"
+    >
+      <SquarePen aria-hidden className="!h-5 !w-5 text-muted-foreground hover:text-foreground " />
       <span className="sr-only">New Chat</span>
     </ButtonLink>
   );

@@ -16,7 +16,7 @@ interface NavBarProps {
 }
 
 export default function NavBar({ onMenuClick }: NavBarProps = {}) {
-  const { data: session, status } = useSession();
+  const { data: session, status, update } = useSession();
   const user = session?.user;
   const [selectedModel, setSelectedModel] = useState(
     session?.user?.model || "gpt-4o-mini",
@@ -28,13 +28,14 @@ export default function NavBar({ onMenuClick }: NavBarProps = {}) {
   const handleModelChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newModel = e.target.value;
     setSelectedModel(newModel);
+    update({user: {model: newModel}})
   };
 
   const { open, openMobile, isMobile } = useSidebar();
 
   return (
-    <header className="sticky top-0 shadow-sm">
-      <nav className="max-w-8xl mx-auto flex h-14 w-full items-center justify-between gap-3 bg-background px-2">
+    <header className="sticky top-0 border-b border-border bg-card/80 backdrop-blur supports-[backdrop-filter]:bg-card/60">
+      <nav className="max-w-8xl mx-auto flex h-14 w-full items-center justify-between gap-3 px-2">
         <div className="flex items-center gap-2">
           {(isMobile && !openMobile) || (!isMobile && !open) ? (
             <div className="flex items-center gap-1">
@@ -42,7 +43,7 @@ export default function NavBar({ onMenuClick }: NavBarProps = {}) {
               <NewChatButton />
             </div>
           ) : null}
-          <Link href="/" className="ml-1 font-bold">
+          <Link href="/" className="ml-1 font-bold text-foreground">
             Aaltoes ChatBot
           </Link>
           {isChatPage && (
@@ -50,7 +51,7 @@ export default function NavBar({ onMenuClick }: NavBarProps = {}) {
               <select
                 onChange={handleModelChange}
                 value={selectedModel}
-                className="appearance-none rounded-lg border border-gray-200 bg-white px-3 py-1 pr-8 text-sm font-medium text-gray-700 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="appearance-none rounded-lg border border-border bg-background px-3 py-1 pr-8 text-sm font-medium text-foreground hover:bg-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 {Object.keys(MODELS).map((model) => (
                   <option key={model} value={model}>
@@ -59,7 +60,7 @@ export default function NavBar({ onMenuClick }: NavBarProps = {}) {
                 ))}
               </select>
               <ChevronDown
-                className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 transform text-gray-400"
+                className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 transform text-muted-foreground"
                 size={14}
               />
             </div>

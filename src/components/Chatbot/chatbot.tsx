@@ -26,6 +26,7 @@ function Chatbot({
   const { data: session } = useSession();
   const messageCountRef = useRef(0);
 
+
   const {
     messages,
     input,
@@ -61,25 +62,29 @@ function Chatbot({
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
       if (session?.user) {
-        handleSubmit();
+        handleSubmit(event as any);
       } else {
-        alert("Please sign in to submit messages.");
+        signIn();
       }
     }
   };
 
   return (
     <div className="flex h-full w-full flex-col">
-      <div className="flex h-[85vh] flex-1 justify-center overflow-y-auto">
+      <div className="flex h-[85vh] flex-1 justify-center overflow-y-auto bg-background">
         <div className="w-full max-w-4xl px-4">
           <div className="flex flex-col gap-2">
             {messages.length > 0 &&
               messages.map((m, index) => (
                 <div key={index} className="fade-in">
                   {m.role === "user" ? (
-                    <UserMessage {...m} />
+                    <div className=" rounded-lg">
+                      <UserMessage {...m} />
+                    </div>
                   ) : (
-                    <BotMessage {...m} createdAt={m.createdAt} />
+                    <div className=" rounded-lg">
+                      <BotMessage {...m} createdAt={m.createdAt}/>
+                    </div>
                   )}
                 </div>
               ))}
@@ -87,7 +92,7 @@ function Chatbot({
         </div>
       </div>
 
-      <div className="h-[15vh] border-t p-4 pb-6 md:pb-8">
+      <div className="h-[15vh]  bg-card p-4 pb-6 md:pb-8">
         <form
           onSubmit={handleSubmit}
           className="relative mx-auto flex max-w-5xl items-center gap-2"
@@ -98,12 +103,12 @@ function Chatbot({
               onKeyDown={handleKeyDown}
               onChange={handleInputChange}
               placeholder="Type your message here..."
-              className="min-h-[100px] w-full resize-none rounded-lg border bg-muted p-4 pr-12 text-base text-foreground placeholder-muted-foreground transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 md:text-lg"
+              className="min-h-[100px] w-full resize-none rounded-lg border bg-background p-4 pr-12 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50"
             />
             <button
               type="submit"
               disabled={!input.trim() || isLoading}
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-muted-foreground transition-colors hover:text-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-muted-foreground transition-colors hover:text-foreground disabled:cursor-not-allowed disabled:opacity-50"
               title="Send message"
             >
               <Send className="h-6 w-6" />
@@ -114,7 +119,7 @@ function Chatbot({
               <button
                 type="button"
                 onClick={stop}
-                className="rounded-lg bg-muted p-3 text-gray-500 transition-colors hover:bg-gray-200 hover:text-red-500"
+                className="rounded-lg bg-muted p-3 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground "
                 title="Stop generating"
               >
                 <Square className="h-6 w-6" />
@@ -124,7 +129,7 @@ function Chatbot({
                 type="button"
                 onClick={() => reload()}
                 disabled={!messages.length}
-                className="rounded-lg bg-muted p-3 text-gray-500 transition-colors hover:bg-gray-200 hover:text-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
+                className="rounded-lg bg-muted p-3 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
                 title="Regenerate response"
               >
                 <RotateCw className="h-6 w-6" />
