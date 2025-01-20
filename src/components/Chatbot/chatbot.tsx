@@ -24,11 +24,7 @@ function Chatbot({
   initialMessages: Message[];
 }) {
   const { data: session } = useSession();
-  const [selectedModel, setSelectedModel] = useState(
-    session?.user?.model || "gpt-4o-mini",
-  );
   const messageCountRef = useRef(0);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const {
     messages,
@@ -42,7 +38,6 @@ function Chatbot({
     id: chatId,
     api: "/api/chat",
     headers: {
-      model: selectedModel,
       num_messages: messageCountRef.current.toString(),
     },
     body: {
@@ -61,14 +56,6 @@ function Chatbot({
       });
     },
   });
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Enter" && !event.shiftKey) {
@@ -97,7 +84,6 @@ function Chatbot({
                 </div>
               ))}
           </div>
-          <div ref={messagesEndRef} />
         </div>
       </div>
 

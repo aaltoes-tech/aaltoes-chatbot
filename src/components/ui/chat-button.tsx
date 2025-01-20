@@ -51,6 +51,7 @@ export function ChatButton({ id, topic, onDelete, onClick }: ChatButtonProps) {
         href={`/chat/${id}`}
         onClick={onClick}
         className="flex-1 ml-1 truncate text-sm text-gray-600 group-hover:text-gray-900"
+        title={topic ?? "New Chat"}
       >
         <div className="">{topic || "New Chat"}</div>
         <span className="absolute inset-0"></span>

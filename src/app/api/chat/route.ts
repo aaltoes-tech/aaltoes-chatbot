@@ -52,7 +52,7 @@ export async function POST(req: Request) {
       );
     }
     const { messages, id: chatId } = body.data;
-    const model = req.headers.get("model") as string;
+    const model = session?.user?.model || "gpt-4o-mini";
     const num_messages = parseInt(req.headers.get("num_messages") || "0");
 
     if (!chatId) {

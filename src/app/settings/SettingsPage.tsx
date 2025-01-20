@@ -51,15 +51,15 @@ export default function SettingsPage({ user }: SettingsPageProps) {
     <main>
       <NavBar />
       <div className="max-w-2xl mx-auto px-4 mx-3 my-10">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
+        <div className="rounded-xl shadow-sm border p-8">
           {/* Header */}
-          <div className="flex items-center gap-3 mb-8 pb-6 border-b">
-            <div className="p-2 bg-blue-50 rounded-lg">
-              <Settings className="w-5 h-5 text-blue-500" />
+          <div className="flex items-center gap-3 mb-8 pb-6">
+            <div className="p-2  rounded-lg">
+              <Settings className="w-5 h-5" />
             </div>
             <div>
-              <h1 className="text-2xl font-semibold text-gray-900">Settings</h1>
-              <p className="text-sm text-gray-500 mt-1">
+              <h1 className="text-2xl font-semibold ">Settings</h1>
+              <p className="text-sm  mt-1">
                 Manage your account preferences
               </p>
             </div>
