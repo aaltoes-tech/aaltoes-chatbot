@@ -71,8 +71,8 @@ export default function WelcomeInput() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-3xl px-4">
-      <div className="relative rounded-xl border border-border bg-card p-8 shadow-sm">
+    <div className="mx-auto w-full max-w-3xl px-2">
+      <div className="relative rounded-xl border border-border bg-card p-4 shadow-sm">
         <div className="mb-6 flex items-center justify-center">
           <div className="rounded-full bg-primary/10 p-3">
             <MessageSquare className="h-6 w-6 text-primary" />
@@ -82,9 +82,6 @@ export default function WelcomeInput() {
         <h1 className="mb-2 text-center text-2xl font-semibold text-foreground">
           How can I help you today?
         </h1>
-        <p className="mb-6 text-center text-sm text-muted-foreground">
-          Ask me anything - I&apos;m here to assist with your questions
-        </p>
 
         <form onSubmit={handleSubmit} className="relative">
           <textarea

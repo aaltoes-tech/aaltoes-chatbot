@@ -8,7 +8,9 @@ import { signIn, useSession } from "next-auth/react";
 import { useChat } from "ai/react";
 import { ChevronDown, Send, Square, RotateCw } from "lucide-react";
 import { toast } from "../ui/use-toast";
-import { notFound } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { useSidebar } from "../ui/sidebar";
+import { SelectModel } from "./select-model";
 
 type Message = {
   role: "user" | "system" | "assistant";
@@ -25,7 +27,6 @@ function Chatbot({
 }) {
   const { data: session } = useSession();
   const messageCountRef = useRef(0);
-
 
   const {
     messages,
@@ -68,21 +69,28 @@ function Chatbot({
       }
     }
   };
+  const { open, openMobile, isMobile } = useSidebar();
 
   return (
-    <div className="flex h-full w-full flex-col">
-      <div className="flex h-[85vh] flex-1 justify-center overflow-y-auto bg-background">
-        <div className="w-full max-w-4xl px-4">
+    <div className="flex h-full w-full flex-col overflow-hidden">
+      <div className={cn(
+        "flex justify-center overflow-y-auto bg-background",
+        isMobile ? "h-[calc(100vh-180px)]" : "h-[85%] flex-1"
+      )}>
+        <div className={cn(
+          "w-full px-4",
+          !isMobile && "max-w-4xl"
+        )}>
           <div className="flex flex-col gap-2">
             {messages.length > 0 &&
               messages.map((m, index) => (
                 <div key={index} className="fade-in">
                   {m.role === "user" ? (
-                    <div className=" rounded-lg">
+                    <div className="rounded-lg">
                       <UserMessage {...m} />
                     </div>
                   ) : (
-                    <div className=" rounded-lg">
+                    <div className="rounded-lg">
                       <BotMessage {...m} createdAt={m.createdAt}/>
                     </div>
                   )}
@@ -92,18 +100,34 @@ function Chatbot({
         </div>
       </div>
 
-      <div className="h-[15vh]  bg-card p-4 pb-6 md:pb-8">
+      <div className={cn(
+        "bg-card",
+        isMobile ? "fixed bottom-0 left-0 right-0 p-2" : "h-[15% p-4 pb-6 md:pb-8"
+      )}>
         <form
           onSubmit={handleSubmit}
-          className="relative mx-auto flex max-w-5xl items-center gap-2"
+          className={cn(
+            "relative flex items-center gap-2",
+            isMobile ? "mx-2" : "mx-auto max-w-5xl"
+          )}
         >
+          {isMobile && (
+            <div className="absolute -top-10 right-0 z-10">
+              <SelectModel />
+            </div>
+          )}
           <div className="relative flex-1">
             <Textarea
               value={input}
               onKeyDown={handleKeyDown}
               onChange={handleInputChange}
               placeholder="Type your message here..."
-              className="min-h-[100px] w-full resize-none rounded-lg border bg-background p-4 pr-12 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50"
+              className={cn(
+                "w-full resize-none rounded-lg border bg-background p-4 pr-12 text-base text-foreground",
+                "placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-0",
+                "disabled:cursor-not-allowed disabled:opacity-50",
+                isMobile ? "min-h-[80px]" : "min-h-[100px]"
+              )}
             />
             <button
               type="submit"
@@ -111,31 +135,33 @@ function Chatbot({
               className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-muted-foreground transition-colors hover:text-foreground disabled:cursor-not-allowed disabled:opacity-50"
               title="Send message"
             >
-              <Send className="h-6 w-6" />
+              <Send className={cn("h-6 w-6", isMobile && "h-5 w-5")} />
             </button>
           </div>
-          <div className="flex gap-2">
-            {isLoading ? (
-              <button
-                type="button"
-                onClick={stop}
-                className="rounded-lg bg-muted p-3 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground "
-                title="Stop generating"
-              >
-                <Square className="h-6 w-6" />
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={() => reload()}
-                disabled={!messages.length}
-                className="rounded-lg bg-muted p-3 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-                title="Regenerate response"
-              >
-                <RotateCw className="h-6 w-6" />
-              </button>
-            )}
-          </div>
+          {!isMobile && (
+            <div className="flex gap-2">
+              {isLoading ? (
+                <button
+                  type="button"
+                  onClick={stop}
+                  className="rounded-lg bg-muted p-3 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+                  title="Stop generating"
+                >
+                  <Square className="h-6 w-6" />
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => reload()}
+                  disabled={!messages.length}
+                  className="rounded-lg bg-muted p-3 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+                  title="Regenerate response"
+                >
+                  <RotateCw className="h-6 w-6" />
+                </button>
+              )}
+            </div>
+          )}
         </form>
       </div>
     </div>
@@ -143,3 +169,4 @@ function Chatbot({
 }
 
 export default Chatbot;
+

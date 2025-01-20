@@ -10,6 +10,7 @@ import { MODELS } from "../lib/constants";
 import { usePathname } from "next/navigation";
 import { SidebarTrigger, useSidebar } from "./ui/sidebar";
 import { NewChatButton } from "./ui/chat-button";
+import { SelectModel } from "./Chatbot/select-model";
 
 interface NavBarProps {
   onMenuClick?: () => void;
@@ -18,18 +19,10 @@ interface NavBarProps {
 export default function NavBar({ onMenuClick }: NavBarProps = {}) {
   const { data: session, status, update } = useSession();
   const user = session?.user;
-  const [selectedModel, setSelectedModel] = useState(
-    session?.user?.model || "gpt-4o-mini",
-  );
   const pathname = usePathname();
 
   const isChatPage = pathname.startsWith("/chat/");
 
-  const handleModelChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newModel = e.target.value;
-    setSelectedModel(newModel);
-    update({user: {model: newModel}})
-  };
 
   const { open, openMobile, isMobile } = useSidebar();
 
@@ -43,28 +36,11 @@ export default function NavBar({ onMenuClick }: NavBarProps = {}) {
               <NewChatButton />
             </div>
           ) : null}
-          <Link href="/" className="ml-1 font-bold text-foreground">
+          <Link href="/" className="ml-1 font-bold text-foreground text-center">
             Aaltoes ChatBot
           </Link>
-          {isChatPage && (
-            <div className="relative">
-              <select
-                onChange={handleModelChange}
-                value={selectedModel}
-                className="appearance-none rounded-lg border border-border bg-background px-3 py-1 pr-8 text-sm font-medium text-foreground hover:bg-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              >
-                {Object.keys(MODELS).map((model) => (
-                  <option key={model} value={model}>
-                    {model}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown
-                className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 transform text-muted-foreground"
-                size={14}
-              />
-            </div>
-          )}
+          {(isChatPage && !isMobile) ?(
+           <SelectModel  />): null}
         </div>
 
         <div className="flex items-center gap-2">

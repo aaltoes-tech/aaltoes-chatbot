@@ -51,7 +51,7 @@ export default function SettingsPage({ user }: SettingsPageProps) {
   return (
     <main className="bg-background">
       <NavBar />
-      <div className="max-w-2xl mx-auto px-4 my-10">
+      <div className="max-w-2xl mx-auto px-2 my-5 overflow-auto">
         <div className="bg-card rounded-xl shadow-sm border border-border p-8">
           {/* Header */}
           <div className="flex items-center gap-3 mb-8 pb-6 border-b border-border">
@@ -68,12 +68,12 @@ export default function SettingsPage({ user }: SettingsPageProps) {
 
           {/* User Info Section */}
           <div className="mb-8">
-            <div className="flex items-center gap-4 p-4 bg-muted/50 rounded-lg">
-              <div className="p-2 bg-background rounded-full shadow-sm">
+            <div className="flex items-center gap-2 p-2 bg-muted/50 rounded-lg">
+              <div className="p-1 bg-background rounded-full shadow-sm">
                 <UserIcon className="w-5 h-5 text-muted-foreground" />
               </div>
               <div>
-                <p className="text-sm font-medium text-foreground">{user.email}</p>
+                <p className="text-sm font-medium text-foreground truncate...">{user.email}</p>
                 <p className="text-xs text-muted-foreground/80">Account Email</p>
               </div>
             </div>

@@ -19,12 +19,11 @@ const reqSchema = z.object({
   ),
   id: z.string(),
 });
-
 export async function POST(req: Request) {
   const session = await getSession();
   const user = session?.user;
 
-  if (!session || !user) {
+  if (!session?.user) {
     return new Response(
       JSON.stringify({
         error: "Unauthorized",
@@ -74,10 +73,10 @@ export async function POST(req: Request) {
       select: { user_id: true },
     });
 
-    if (!chat || chat.user_id !== user.id) {
+    if (!chat || chat.user_id !== user?.id) {
       return new Response(
         JSON.stringify({
-          error: "Unauthorized",
+          error: "Unauthorized", 
           message: "You do not have access to this chat",
         }),
         {
@@ -185,8 +184,6 @@ export async function POST(req: Request) {
                 quota: (user_quota?.quota || 0) - (input_quota + output_quota),
               },
             });
-
-            session.user.quota = updatedUser.quota as number;
           }
         },
       });
