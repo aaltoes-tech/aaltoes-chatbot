@@ -18,7 +18,8 @@ import { useForm } from "react-hook-form";
 import { updateProfile } from "./actions";
 import { ArrowLeft, Shield, User } from "@geist-ui/icons";
 import Link from "next/link";
-import { ChevronDown } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../../../components/ui/select";
+
 interface UpdatePageProps {
   user: {
     id: string,
@@ -95,20 +96,16 @@ export default function UpdatePage({ user }: UpdatePageProps) {
                       <FormLabel>Role</FormLabel>
                       <FormControl>
                         <div className="relative">
-                        <select 
-                          {...field} 
-                          className="appearance-none w-full border border-border bg-background rounded-lg px-3 py-2
-                                   text-foreground 
-                                   focus-visible:ring-ring focus-visible:ring-offset-0">
-                          <option value="User">User</option>
-                          <option value="Admin">Admin</option>
-                        </select>
-                        <ChevronDown
-                className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 transform text-muted-foreground"
-                size={14}
-              />
+                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select a role" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="User">User</SelectItem>
+                              <SelectItem value="Admin">Admin</SelectItem>
+                            </SelectContent>
+                          </Select>
                         </div>
-                       
                       </FormControl>
                       <FormDescription className="text-muted-foreground">
                         User&apos;s permission level

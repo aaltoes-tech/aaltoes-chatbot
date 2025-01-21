@@ -5,14 +5,15 @@ import { useState } from "react";
 import { MODELS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/select";
+
 export function SelectModel() {
   const { data: session } = useSession();
   const [selectedModel, setSelectedModel] = useState(
     session?.user?.model || "gpt-4o-mini"
   );
 
-  const handleModelChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newModel = e.target.value;
+  const handleModelChange = async (newModel: string) => {
     setSelectedModel(newModel);
     try {
       const response = await fetch("/api/user/update", {
@@ -28,22 +29,21 @@ export function SelectModel() {
 
   return (
     <div className="relative">
-      <select
-        onChange={handleModelChange}
-        value={selectedModel}
-        className={cn(
-          "appearance-none rounded-lg border border-border bg-background",
-          "text-sm font-medium text-foreground hover:bg-accent",
-          "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-          "px-2 py-1.5 pr-7 w-[120px] md:w-auto md:px-3 md:py-1 md:pr-8"
-        )}
-      >
-        {Object.keys(MODELS).map((model) => (
-          <option key={model} value={model}>
-            {model}
-          </option>
-        ))}
-      </select>
+      <Select onValueChange={handleModelChange} value={selectedModel}>
+        <SelectTrigger className={cn(
+         "w-full resize-none rounded-lg border bg-background text-base text-foreground",
+            "placeholder:text-muted-foreground/60"
+        )}>
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          {Object.keys(MODELS).map((model) => (
+            <SelectItem key={model} value={model}>
+              {model}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
     </div>
   );
 }

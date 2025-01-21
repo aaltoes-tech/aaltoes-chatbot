@@ -23,10 +23,7 @@ export function AppSidebar() {
           </Link>
         <NewChatButton />
       </SidebarHeader>
-      <AppSidebarContent />
-      
-    
-          
+      <AppSidebarContent />      
     </Sidebar>
   );
 }
