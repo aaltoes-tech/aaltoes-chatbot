@@ -21,7 +21,7 @@ export default async function Page({ params: { id } }: PageProps) {
       <ScrollableChatMessages
         slotBefore={<NavBar />}
         messagesClassName="pt-4 pb-[10rem]"
-        className="h-screen supports-[height:100dvh]:h-dvh"
+        className="h-svh"
         chatId={id}
         initialMessages={initialMessages}
       />
