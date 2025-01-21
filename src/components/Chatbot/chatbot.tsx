@@ -103,6 +103,9 @@ function Chatbot({
   }, [messages, isUserScrolling]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (isLoading) {
+      return;
+    }
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
       if (session?.user) {
@@ -120,6 +123,12 @@ function Chatbot({
         top: chatContainerRef.current.scrollHeight,
         behavior: 'smooth'
       });
+    }
+  };
+
+  const handlePreInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (!isLoading) {
+      handleInputChange(e);
     }
   };
 
@@ -186,7 +195,7 @@ function Chatbot({
               input={input}
               isLoading={isLoading}
               handleKeyDown={handleKeyDown}
-              handleInputChange={handleInputChange}
+              handleInputChange={handlePreInputChange}
               stop={stop}
               reload={reload}
               messages={messages}
@@ -196,7 +205,7 @@ function Chatbot({
               input={input}
               isLoading={isLoading}
               handleKeyDown={handleKeyDown}
-              handleInputChange={handleInputChange}
+              handleInputChange={handlePreInputChange}
               handleSubmit={handleSubmit}
               stop={stop}
               reload={reload}
