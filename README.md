@@ -26,4 +26,4 @@ New functions to be added in the near future.
 ### Modification of the user data
 ![image](https://github.com/user-attachments/assets/7a8214ed-634b-40b8-a08a-eef499ddd534)
 
-Code was written by me and optimized/fixed by @yerzham 
+Code was written by me and optimized/fixed by [@yerzham](https://github.com/yerzham)
