@@ -8,23 +8,14 @@ import { cn } from "@/lib/utils";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export function SelectModel() {
-  const { data: session } = useSession();
+  const { data: session, update } = useSession();
   const [selectedModel, setSelectedModel] = useState(
     session?.user?.model || "gpt-4o-mini"
   );
 
   const handleModelChange = async (newModel: string) => {
     setSelectedModel(newModel);
-    try {
-      const response = await fetch("/api/user/update", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ model: newModel }),
-      });
-      if (!response.ok) throw new Error("Failed to update model");
-    } catch (error) {
-      console.error("Error updating model:", error);
-    }
+    await update({ user: { model: newModel } });
   };
 
   return (
