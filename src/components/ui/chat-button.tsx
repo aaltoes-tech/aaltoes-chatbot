@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button, ButtonLink, buttonVariants } from "./button";
-import { MessageSquare, SquarePen, Trash2 } from "lucide-react";
+import * as Icon from '@geist-ui/icons'
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -47,7 +47,7 @@ export function ChatButton({ id, topic, onDelete, onClick, isMobile = false }: C
 
   return (
     <div className={cn("group relative flex items-center w-full", buttonVariants({ variant: "ghost" }))}>
-      <MessageSquare className="!h-4 !w-4 shrink-0 text-muted-foreground" />
+      <Icon.MessageCircle className="!h-4 !w-4 shrink-0 text-muted-foreground" />
       <Link
         href={`/chat/${id}`}
         onClick={onClick}
@@ -65,7 +65,7 @@ export function ChatButton({ id, topic, onDelete, onClick, isMobile = false }: C
         className="z-10 p-1 shrink-0 text-muted-foreground opacity-0 transition-all hover:text-destructive group-hover:opacity-100"
         title="Delete chat"
       >
-        <Trash2 size={16} />
+        <Icon.Trash2 size={16} />
       </button>
     </div>
   );
@@ -80,7 +80,7 @@ export function NewChatButton() {
       href="/" 
       className="h-8 w-8"
     >
-      <SquarePen aria-hidden className="!h-5 !w-5 text-muted-foreground hover:text-foreground " />
+      <Icon.PlusCircle aria-hidden className="!h-5 !w-5 text-muted-foreground hover:text-foreground " />
       <span className="sr-only">New Chat</span>
     </ButtonLink>
   );

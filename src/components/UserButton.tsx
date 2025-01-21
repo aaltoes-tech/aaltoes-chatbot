@@ -1,6 +1,6 @@
 "use client"
 
-import { Lock, LogOut, Settings, Home, Moon, Sun } from "lucide-react";
+import { Lock, LogOut, Settings, Home, Moon, Sun } from "@geist-ui/icons";
 import { User } from "next-auth";
 import { signOut } from "next-auth/react";
 import Image from "next/image";

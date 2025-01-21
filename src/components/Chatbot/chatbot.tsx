@@ -2,15 +2,13 @@
 
 import BotMessage from "./ui/bot-message";
 import UserMessage from "./ui/user-message";
-import { Textarea } from "../ui/textarea";
 import { useState, useEffect, useRef } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useChat } from "ai/react";
-import { ChevronDown, Send, Square, RotateCw } from "lucide-react";
+import { ChevronDown} from "@geist-ui/icons";
 import { toast } from "../ui/use-toast";
 import { cn } from "@/lib/utils";
 import { useSidebar } from "../ui/sidebar";
-import { SelectModel } from "./select-model";
 import { InputComputer } from "./ui/input-computer";
 import { InputMobile } from "./ui/input-mobile";
 

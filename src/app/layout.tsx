@@ -1,20 +1,12 @@
-import NavBar from "../components/NavBar";
 import { Toaster } from "../components/ui/toaster";
 import type { Metadata } from "next";
-import { SessionProvider } from "next-auth/react";
-import { Inter } from "next/font/google";
+import { GeistMono } from 'geist/font/mono';
 import "./globals.css";
-import { ThemeProvider } from "next-themes";
+
 import "katex/dist/katex.min.css";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Providers } from "@/components/providers";
 import { cn } from "@/lib/utils";
-
-const inter = Inter({ subsets: ["latin"] });
-
-const queryClient = new QueryClient();
 
 export const metadata: Metadata = {
   title: {
@@ -30,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className="h-full">
+    <html lang="en" suppressHydrationWarning className={(GeistMono.className)}>
       <head>
         <link
           rel="stylesheet"
@@ -40,7 +32,6 @@ export default function RootLayout({
         />
       </head>
       <body className={cn(
-        inter.className,
         "h-full overflow-hidden bg-background font-sans antialiased",
         "border-border"
       )}>

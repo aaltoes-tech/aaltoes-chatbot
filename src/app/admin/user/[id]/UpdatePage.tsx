@@ -16,7 +16,7 @@ import { UpdateAdminValues, updateAdminSchema } from "../../../../lib/validation
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { updateProfile } from "./actions";
-import { ArrowLeft, Shield, User } from "lucide-react";
+import { ArrowLeft, Shield, User } from "@geist-ui/icons";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
 interface UpdatePageProps {

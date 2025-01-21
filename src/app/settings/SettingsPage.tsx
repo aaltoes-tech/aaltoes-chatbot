@@ -18,7 +18,7 @@ import { User } from "next-auth";
 import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { updateProfile } from "./actions";
-import { Settings, User as UserIcon } from "lucide-react";
+import { Settings, User as UserIcon } from "@geist-ui/icons";
 import NavBar from "../../components/NavBar";
 import Quota from "../../components/quota";
 

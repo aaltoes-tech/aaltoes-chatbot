@@ -2,7 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
-import { Coins } from "lucide-react";
+import { Zap } from "@geist-ui/icons";
 import { Button } from "./ui/button";
 
 interface QuotaData {
@@ -41,7 +41,7 @@ export default function Quota() {
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
                             <div className="p-2 bg-primary/10 rounded-lg">
-                                <Coins className="w-5 h-5 text-primary" />
+                                <Zap className="w-5 h-5 text-primary" />
                             </div>
                             <div>
                                 <h3 className="text-sm font-medium text-foreground">Available Credits</h3>

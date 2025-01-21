@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Users, ChevronRight, Search } from "lucide-react";
 import NavBar from "./NavBar";
+import {  Users, Search, ChevronRight } from '@geist-ui/icons'
 
 interface User {
   id: string;

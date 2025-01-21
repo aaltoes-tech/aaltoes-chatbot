@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { Send, Square, RotateCw } from "lucide-react";
+import { Send, Square, RotateCw } from "@geist-ui/icons";
 import { Textarea } from "../../ui/textarea";
 
 interface InputComputerProps {

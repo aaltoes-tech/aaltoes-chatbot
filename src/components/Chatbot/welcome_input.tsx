@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Send, MessageSquare } from "lucide-react";
+import { Send, MessageCircle } from "@geist-ui/icons";
 import { useSession } from "next-auth/react";
 import { useChat } from "ai/react";
 import cuid from "cuid";
@@ -75,7 +75,7 @@ export default function WelcomeInput() {
       <div className="relative rounded-xl border border-border bg-card p-4 shadow-sm">
         <div className="mb-6 flex items-center justify-center">
           <div className="rounded-full bg-primary/10 p-3">
-            <MessageSquare className="h-6 w-6 text-primary" />
+            <MessageCircle className="h-6 w-6 text-primary" />
           </div>
         </div>
 
