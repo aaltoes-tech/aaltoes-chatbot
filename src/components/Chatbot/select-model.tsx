@@ -5,7 +5,7 @@ import { useState } from "react";
 import { MODELS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export function SelectModel() {
   const { data: session } = useSession();
