@@ -7,13 +7,15 @@ The project was developed using `next.js`
 Code was written by me and optimized/fixed by [@yerzham](https://github.com/yerzham)
 
 ## Features
-- Respsonses are streamed and are rendered in memoized markdown
+- Authorization with Google
+- Respsonses are streamed and rendered in memoized markdown
 - Autoscroll function
 - Reload/stop of responses
-- Admin role
+- Admin role/panel
 - Quota system
 - Dark theme
 - Topics name are generated based on the chat history
+- Chats are sorted out into three categories: Today, Yesterday, Previous 7 days
 
 New functions to be added in the near future.
 
@@ -26,5 +28,3 @@ New functions to be added in the near future.
 ![image](https://github.com/user-attachments/assets/d29c2046-4be1-469e-8b6f-aab16aa0ce69)
 ### Modification of the user data
 ![image](https://github.com/user-attachments/assets/7a8214ed-634b-40b8-a08a-eef499ddd534)
-
-
