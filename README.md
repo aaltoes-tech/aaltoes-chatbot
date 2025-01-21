@@ -9,10 +9,11 @@ Code was written by me and optimized/fixed by [@yerzham](https://github.com/yerz
 ## Features
 - Authorization with Google
 - Responses are streamed and rendered in memoized markdown
+- Selector of different ChatGPT model (affect on the way quota is counted)
 - Autoscroll function
 - Reload/stop of responses
 - Admin role/panel
-- Quota system
+- Quota system (quota requests via e-mails)
 - Dark theme
 - Topics name are generated based on the chat history
 - Chats are sorted out into three categories: Today, Yesterday, Previous 7 days
