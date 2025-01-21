@@ -11,4 +11,4 @@ Features
 - Quota system
 - Dark theme
 
-- 
+Code was written by me and optimized/fixed by @yerzham 
