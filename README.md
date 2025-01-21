@@ -8,7 +8,7 @@ Code was written by me and optimized/fixed by [@yerzham](https://github.com/yerz
 
 ## Features
 - Authorization with Google
-- Respsonses are streamed and rendered in memoized markdown
+- Responses are streamed and rendered in memoized markdown
 - Autoscroll function
 - Reload/stop of responses
 - Admin role/panel
