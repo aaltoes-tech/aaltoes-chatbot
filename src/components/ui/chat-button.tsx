@@ -4,6 +4,7 @@ import * as Icon from '@geist-ui/icons'
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useSidebar } from "./sidebar";
 
 interface ChatButtonProps {
   id: string;
@@ -72,6 +73,8 @@ export function ChatButton({ id, topic, onDelete, onClick, isMobile = false }: C
 }
 
 export function NewChatButton() {
+  const { setOpenMobile } = useSidebar();
+
   return (
     <ButtonLink 
       title="Create New Chat" 
@@ -79,8 +82,9 @@ export function NewChatButton() {
       variant="ghost" 
       href="/" 
       className="h-8 w-8"
+      onClick={() => setOpenMobile(false)}
     >
-      <Icon.PlusCircle aria-hidden className="!h-5 !w-5 text-muted-foreground hover:text-foreground " />
+      <Icon.PlusCircle aria-hidden className="!h-5 !w-5 text-muted-foreground hover:text-foreground" />
       <span className="sr-only">New Chat</span>
     </ButtonLink>
   );
