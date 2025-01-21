@@ -157,7 +157,7 @@ function Chatbot({
           "w-full px-4",
           !isMobile && "max-w-4xl"
         )}>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 p-4">
             {messages.length > 0 &&
               messages.map((m, index) => (
                 <div key={index} className="animate-in fade-in-0 duration-700 ease-out">

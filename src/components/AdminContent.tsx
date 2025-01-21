@@ -4,6 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import NavBar from "./NavBar";
 import {  Users, Search, ChevronRight } from '@geist-ui/icons'
+import { cn } from "@/lib/utils";
+import { Input } from "./ui/input";
 
 interface User {
   id: string;
@@ -37,14 +39,17 @@ export default function AdminContent({ initialUsers }: { initialUsers: User[] })
             
             <div className="w-full">
               <div className="relative">
-                <input
+                <Input
                   type="text"
                   placeholder="Search by name or email..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full px-3 py-2 pl-9 bg-background border border-border
-                           rounded-lg focus:outline-none focus-visible:ring-2 
-                           focus-visible:ring-ring placeholder:text-muted-foreground"
+                  className={cn("w-full resize-none rounded-lg border bg-background text-base text-foreground",
+                    "placeholder:text-muted-foreground/60 focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-0",
+                    "disabled:cursor-not-allowed disabled:opacity-50",
+                    "py-3.5 px-8 pr-12",
+                    "shadow-sm transition-shadow duration-200",
+                    "focus:shadow-md")}
                 />
                 <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={16} />
               </div>

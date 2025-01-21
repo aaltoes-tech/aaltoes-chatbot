@@ -14,6 +14,7 @@ import { Input } from "./ui/input";
 import { Search } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { formatDistanceToNow, isToday, isYesterday, isWithinInterval, subDays } from "date-fns";
+import { cn } from "@/lib/utils";
 
 const chatSchema = z.object({
   id: z.string(),
@@ -123,7 +124,14 @@ const ChatsList = ({ userId }: { userId: string }) => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search chats"
-            className="pl-11 bg-background text-foreground placeholder:text-muted-foreground border-border"
+            className={cn(
+              "w-full resize-none rounded-lg border bg-background text-base text-foreground",
+              "placeholder:text-muted-foreground/60 focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-0",
+              "disabled:cursor-not-allowed disabled:opacity-50", 
+              "py-3.5 px-4 pl-10",
+              "shadow-sm transition-shadow duration-200",
+              "focus:shadow-md"
+            )}
           />
           <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 transform text-muted-foreground" />
         </div>

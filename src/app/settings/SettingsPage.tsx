@@ -21,6 +21,7 @@ import { updateProfile } from "./actions";
 import { Settings, User as UserIcon } from "@geist-ui/icons";
 import NavBar from "../../components/NavBar";
 import Quota from "../../components/quota";
+import { cn } from "../../lib/utils";
 
 interface SettingsPageProps {
   user: User;
@@ -93,9 +94,14 @@ export default function SettingsPage({ user }: SettingsPageProps) {
                     <FormLabel>Display Name</FormLabel>
                     <FormControl>
                       <Input 
-                        placeholder="Enter your display name" 
+                        placeholder="Enter your display name"
                         {...field}
-                        className="bg-background"
+                        className={cn("w-full resize-none rounded-lg border bg-background text-base text-foreground",
+            "placeholder:text-muted-foreground/60 focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-0",
+            "disabled:cursor-not-allowed disabled:opacity-50",
+            "py-3.5 px-4 pr-12",
+            "shadow-sm transition-shadow duration-200",
+            "focus:shadow-md")}
                       />
                     </FormControl>
                     <FormDescription>

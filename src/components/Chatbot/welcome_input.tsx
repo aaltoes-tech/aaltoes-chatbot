@@ -7,6 +7,8 @@ import { useSession } from "next-auth/react";
 import { useChat } from "ai/react";
 import cuid from "cuid";
 import { useQueryClient } from "@tanstack/react-query";
+import { Textarea } from "../ui/textarea";
+import { cn } from "@/lib/utils";
 
 export default function WelcomeInput() {
   const { data: session } = useSession();
@@ -84,12 +86,19 @@ export default function WelcomeInput() {
         </h1>
 
         <form onSubmit={handleSubmit} className="relative">
-          <textarea
+          <Textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="Type your message here..."
-            className="min-h-[100px] w-full resize-none rounded-lg border border-border bg-background p-4 pr-12 text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
-            onKeyDown={(e) => {
+            className={cn(
+              "w-full resize-none rounded-lg border bg-background text-base text-foreground",
+              "placeholder:text-muted-foreground/60 focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-0",
+              "disabled:cursor-not-allowed disabled:opacity-50",
+              "min-h-[100px] py-3.5 px-4 pr-12",
+              "shadow-sm transition-shadow duration-200",
+              "focus:shadow-md"
+            )}
+            onKeyDown={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
                 handleSubmit(e);
