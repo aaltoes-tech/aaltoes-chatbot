@@ -18,7 +18,7 @@ import { useForm } from "react-hook-form";
 import { updateProfile } from "./actions";
 import { ArrowLeft, Shield, User } from "@geist-ui/icons";
 import Link from "next/link";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../../../components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface UpdatePageProps {
   user: {
