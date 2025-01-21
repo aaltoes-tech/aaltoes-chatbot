@@ -57,8 +57,8 @@ export default function BotMessage({
     id: string;
 }) {
     return (
-        <div className="flex w-full w-full">
-            <div className="text-left  text-foreground">
+        <div className="flex  text-left  text-foreground">
+            <div className="text-left w-[100%] p-3 text-base leading-relaxed">
                 <MemoizedMarkdown id={id} content={content} />
             </div>
         </div>

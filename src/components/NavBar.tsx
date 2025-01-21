@@ -35,10 +35,12 @@ export default function NavBar({ onMenuClick }: NavBarProps = {}) {
               <SidebarTrigger />
               <NewChatButton />
             </div>
-          ) : null}
+          ) : null} 
+          {(!isMobile && !open)|| (isMobile) ? (
           <Link href="/" className="ml-1 font-bold text-foreground text-center">
             Aaltoes ChatBot
           </Link>
+          ) : null}
           {(isChatPage && !isMobile) ?(
            <SelectModel  />): null}
         </div>

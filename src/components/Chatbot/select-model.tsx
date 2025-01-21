@@ -4,7 +4,6 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { MODELS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { ChevronDown } from "lucide-react";
 
 export function SelectModel() {
   const { data: session } = useSession();
