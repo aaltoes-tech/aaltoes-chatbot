@@ -218,7 +218,7 @@ const ChatInput = ({
   return (
     <div
       className={cn(
-        "absolute bottom-0 left-0 right-0 h-[15%] bg-card pb-6 transition-all duration-300 ease-out md:pb-8",
+        "absolute bottom-0 left-0 right-0 bg-card pb-6 transition-all duration-300 ease-out md:pb-8",
         !isMobile && "p-4",
         className,
       )}

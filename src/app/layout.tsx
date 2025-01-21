@@ -35,7 +35,7 @@ export default function RootLayout({
       <body className={cn("h-full w-full bg-background font-sans antialiased")}>
         <Providers>
           <AppSidebar />
-          <main className="relative h-svh w-full overflow-auto">
+          <main className="relative w-full overflow-auto">
             {children}
           </main>
           <Toaster />
