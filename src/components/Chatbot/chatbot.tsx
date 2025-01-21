@@ -71,14 +71,17 @@ function Chatbot({
       if (chatContainerRef.current) {
         const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
         // Check if the user is scrolling away from the bottom
-        const isAtBottom = scrollTop + clientHeight >= scrollHeight - 10;
+        const isAtBottom = scrollTop + clientHeight >= scrollHeight - 20;
         setIsUserScrolling(!isAtBottom);
       }
     };
 
     const container = chatContainerRef.current;
+
     if (container) {
       container.addEventListener('scroll', handleScroll);
+      // Initial check
+      handleScroll();
     }
 
     return () => {
@@ -93,8 +96,9 @@ function Chatbot({
     if (!isUserScrolling && chatContainerRef.current) {
       chatContainerRef.current.scrollTo({
         top: chatContainerRef.current.scrollHeight,
-        behavior: 'smooth', // Optional: Smooth scroll
+        behavior: 'smooth'
       });
+      setIsUserScrolling(false);
     }
   }, [messages, isUserScrolling]);
 
@@ -110,11 +114,37 @@ function Chatbot({
   };
   const { open, openMobile, isMobile } = useSidebar();
 
+  const scrollToBottom = () => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
-    <div className="flex h-full w-full flex-col ">
+    
+    <div className="flex h-full w-full flex-col">
+      {isUserScrolling && (
+        <button
+          onClick={scrollToBottom}
+          className={cn(
+            "fixed left-[350px] top-1/2 -translate-x-1/2 -translate-y-1/2 z-10",
+            "rounded-full bg-accent/80 p-2 text-accent-foreground shadow-md",
+            "transition-all duration-200 hover:bg-accent",
+            "animate-in fade-in-0 zoom-in-90",
+            "hover:scale-105 active:scale-95 opacity-50 hover:opacity-100",
+            isMobile && "left-[20px]"
+          )}
+          title="Scroll to bottom"
+        >
+          <ChevronDown className="h-5 w-5" />
+        </button>
+      )}
       <div className={cn(
-        "flex justify-center overflow-y-auto bg-background",
-        isMobile ? "h-[calc(100vh-200px)]" : "h-[85%] flex-1 "
+        "flex justify-center overflow-y-auto bg-background relative",
+        isMobile ? "h-[calc(100vh-200px)]" : "h-[85%] flex-1"
       )} ref={chatContainerRef}>
         <div className={cn(
           "w-full px-4",
@@ -123,7 +153,7 @@ function Chatbot({
           <div className="flex flex-col gap-2">
             {messages.length > 0 &&
               messages.map((m, index) => (
-                <div key={index} className="fade-in">
+                <div key={index} className="animate-in fade-in-0 duration-700 ease-out">
                   {m.role === "user" ? (
                     <div className="rounded-lg">
                       <UserMessage {...m} />
