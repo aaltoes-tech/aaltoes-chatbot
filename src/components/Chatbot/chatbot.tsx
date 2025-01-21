@@ -5,7 +5,7 @@ import UserMessage from "./ui/user-message";
 import { useState, useEffect, useRef } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useChat } from "ai/react";
-import { ChevronDown} from "@geist-ui/icons";
+import { ChevronDown } from "@geist-ui/icons";
 import { toast } from "../ui/use-toast";
 import { cn } from "@/lib/utils";
 import { useSidebar } from "../ui/sidebar";
@@ -18,17 +18,152 @@ type Message = {
   id: string;
 };
 
-function Chatbot({
+function ScrollButton({ onClick }: { onClick: () => void }) {
+  const { isMobile } = useSidebar();
+  return (
+    <button
+      onClick={onClick}
+      className={cn(
+        "fixed left-[350px] top-1/2 z-10 -translate-x-1/2 -translate-y-1/2",
+        "rounded-full bg-accent/80 p-2 text-accent-foreground shadow-md",
+        "transition-all duration-200 hover:bg-accent",
+        "animate-in fade-in-0 zoom-in-90",
+        "opacity-50 hover:scale-105 hover:opacity-100 active:scale-95",
+        isMobile && "left-[20px]",
+      )}
+      title="Scroll to bottom"
+    >
+      <ChevronDown className="h-5 w-5" />
+    </button>
+  );
+}
+
+export function ScrollableChatMessages({
   chatId,
   initialMessages,
+  className,
+  messagesClassName,
+  slotBefore,
+  slotAfter,
 }: {
   chatId: string;
   initialMessages: Message[];
+  className?: string;
+  messagesClassName?: string;
+  slotBefore?: React.ReactNode;
+  slotAfter?: React.ReactNode;
 }) {
-  const { data: session } = useSession();
+  const [isAtBottom, setIsAtBottom] = useState(true);
+  const scrollableRef = useRef<HTMLDivElement>(null);
+
+  const { messages } = useChat({
+    id: chatId,
+    api: "/api/chat",
+    experimental_throttle: 50,
+    initialMessages: initialMessages,
+  });
+
+  const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
+    const element = event.currentTarget;
+    const threshold = 200;
+    const bottom =
+      element.scrollHeight - element.scrollTop - element.clientHeight <
+      threshold;
+    setIsAtBottom(bottom);
+  };
+
+  const scrollToBottom = () => {
+    scrollableRef.current?.scrollTo({
+      top: scrollableRef.current.scrollHeight,
+      behavior: "smooth",
+    });
+  };
+
+  useEffect(() => {
+    console.log("isAtBottom", isAtBottom);
+
+    if (isAtBottom) {
+      scrollToBottom();
+    }
+  }, [isAtBottom, messages]);
+
+  return (
+    <div
+      ref={scrollableRef}
+      className={cn("flex h-full w-full flex-col overflow-y-auto", className)}
+      onScroll={handleScroll}
+    >
+      {slotBefore}
+      {!isAtBottom && <ScrollButton onClick={scrollToBottom} />}
+      <ChatMessages
+        chatId={chatId}
+        initialMessages={initialMessages}
+        className={messagesClassName}
+      />
+      {slotAfter}
+    </div>
+  );
+}
+
+function ChatMessages({
+  chatId,
+  initialMessages,
+  className,
+}: {
+  chatId: string;
+  initialMessages: Message[];
+  className?: string;
+}) {
+  const { isMobile } = useSidebar();
+  const { messages } = useChat({
+    id: chatId,
+    api: "/api/chat",
+    experimental_throttle: 50,
+    initialMessages: initialMessages,
+  });
+
+  return (
+    <div
+      className={cn(
+        "flex w-full flex-col gap-2 px-4",
+        !isMobile && "mx-auto max-w-4xl",
+        className,
+      )}
+    >
+      {messages.length > 0 &&
+        messages.map((m, index) => (
+          <div
+            key={index}
+            className="duration-700 ease-out animate-in fade-in-0"
+          >
+            {m.role === "user" ? (
+              <div className="rounded-lg">
+                <UserMessage {...m} />
+              </div>
+            ) : (
+              <div className="rounded-lg">
+                <BotMessage {...m} createdAt={m.createdAt} />
+              </div>
+            )}
+          </div>
+        ))}
+    </div>
+  );
+}
+
+const ChatInput = ({
+  chatId,
+  initialMessages,
+  className,
+}: {
+  chatId: string;
+  initialMessages: Message[];
+  className?: string;
+}) => {
   const messageCountRef = useRef(0);
+  const { data: session } = useSession();
 
-
+  const { isMobile } = useSidebar();
   const {
     messages,
     input,
@@ -60,46 +195,6 @@ function Chatbot({
     },
   });
 
-  const [isUserScrolling, setIsUserScrolling] = useState(false);
-  const chatContainerRef = useRef<HTMLDivElement>(null);
-
-  // Track user scrolling
-  useEffect(() => {
-    const handleScroll = () => {
-      if (chatContainerRef.current) {
-        const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
-        // Check if the user is scrolling away from the bottom
-        const isAtBottom = scrollTop + clientHeight >= scrollHeight - 20;
-        setIsUserScrolling(!isAtBottom);
-      }
-    };
-
-    const container = chatContainerRef.current;
-
-    if (container) {
-      container.addEventListener('scroll', handleScroll);
-      // Initial check
-      handleScroll();
-    }
-
-    return () => {
-      if (container) {
-        container.removeEventListener('scroll', handleScroll);
-      }
-    };
-  }, []);
-
-  // Handle automatic scrolling
-  useEffect(() => {
-    if (!isUserScrolling && chatContainerRef.current) {
-      chatContainerRef.current.scrollTo({
-        top: chatContainerRef.current.scrollHeight,
-        behavior: 'smooth'
-      });
-      setIsUserScrolling(false);
-    }
-  }, [messages, isUserScrolling]);
-
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (isLoading) {
       return;
@@ -113,16 +208,6 @@ function Chatbot({
       }
     }
   };
-  const { open, openMobile, isMobile } = useSidebar();
-
-  const scrollToBottom = () => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTo({
-        top: chatContainerRef.current.scrollHeight,
-        behavior: 'smooth'
-      });
-    }
-  };
 
   const handlePreInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (!isLoading) {
@@ -131,90 +216,44 @@ function Chatbot({
   };
 
   return (
-    
-    <div className="flex h-full w-full flex-col">
-      {isUserScrolling && (
-        <button
-          onClick={scrollToBottom}
-          className={cn(
-            "fixed left-[350px] top-1/2 -translate-x-1/2 -translate-y-1/2 z-10",
-            "rounded-full bg-accent/80 p-2 text-accent-foreground shadow-md",
-            "transition-all duration-200 hover:bg-accent",
-            "animate-in fade-in-0 zoom-in-90",
-            "hover:scale-105 active:scale-95 opacity-50 hover:opacity-100",
-            isMobile && "left-[20px]"
-          )}
-          title="Scroll to bottom"
-        >
-          <ChevronDown className="h-5 w-5" />
-        </button>
+    <div
+      className={cn(
+        "absolute bottom-0 left-0 right-0 h-[15%] bg-card pb-6 transition-all duration-300 ease-out md:pb-8",
+        !isMobile && "p-4",
+        className,
       )}
-      <div className={cn(
-        "flex justify-center overflow-y-auto bg-background relative",
-        isMobile ? "h-[calc(100vh-200px)]" : "h-[85%] flex-1"
-      )} ref={chatContainerRef}>
-        <div className={cn(
-          "w-full px-4",
-          !isMobile && "max-w-4xl"
-        )}>
-          <div className="flex flex-col gap-2 p-4">
-            {messages.length > 0 &&
-              messages.map((m, index) => (
-                <div key={index} className="animate-in fade-in-0 duration-700 ease-out">
-                  {m.role === "user" ? (
-                    <div className="rounded-lg">
-                      <UserMessage {...m} />
-                    </div>
-                  ) : (
-                    <div className="rounded-lg">
-                      <BotMessage {...m} createdAt={m.createdAt}/>
-                    </div>
-                  )}
-                </div>
-              ))}
-          </div>
-        </div>
-      </div>
-
-      <div className={cn(
-        "bg-card",
-        isMobile ? "fixed bottom-[15px] left-0 right-0 " : "h-[15% p-4 pb-6 md:pb-8"
-      )}>
-        <form
-          onSubmit={handleSubmit}
-          className={cn(
-            "relative flex items-center gap-2",
-            isMobile ? "mx-2" : "mx-auto max-w-5xl"
-          )}
-        >
-          
-          {isMobile ? (
-            <InputMobile
-              input={input}
-              isLoading={isLoading}
-              handleKeyDown={handleKeyDown}
-              handleInputChange={handlePreInputChange}
-              stop={stop}
-              reload={reload}
-              messages={messages}
-            />
-          ) : (
-            <InputComputer
-              input={input}
-              isLoading={isLoading}
-              handleKeyDown={handleKeyDown}
-              handleInputChange={handlePreInputChange}
-              handleSubmit={handleSubmit}
-              stop={stop}
-              reload={reload}
-              messages={messages}
-            />
-          )}
-        </form>
-      </div>
+    >
+      <form
+        onSubmit={handleSubmit}
+        className={cn(
+          "relative flex items-center gap-2",
+          isMobile ? "mx-2" : "mx-auto max-w-5xl",
+        )}
+      >
+        {isMobile ? (
+          <InputMobile
+            input={input}
+            isLoading={isLoading}
+            handleKeyDown={handleKeyDown}
+            handleInputChange={handlePreInputChange}
+            stop={stop}
+            reload={reload}
+            disabled={messages.length === 0}
+          />
+        ) : (
+          <InputComputer
+            input={input}
+            isLoading={isLoading}
+            handleKeyDown={handleKeyDown}
+            handleInputChange={handlePreInputChange}
+            stop={stop}
+            reload={reload}
+            disabled={messages.length === 0}
+          />
+        )}
+      </form>
     </div>
   );
-}
+};
 
-export default Chatbot;
-
+export { ChatMessages, ChatInput };

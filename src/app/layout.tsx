@@ -1,12 +1,13 @@
 import { Toaster } from "../components/ui/toaster";
 import type { Metadata } from "next";
-import { GeistMono } from 'geist/font/mono';
+import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 
 import "katex/dist/katex.min.css";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Providers } from "@/components/providers";
 import { cn } from "@/lib/utils";
+import NavBar from "@/components/NavBar";
 
 export const metadata: Metadata = {
   title: {
@@ -22,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={(GeistMono.className)}>
+    <html lang="en" suppressHydrationWarning className={GeistMono.className}>
       <head>
         <link
           rel="stylesheet"
@@ -31,16 +32,11 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
       </head>
-      <body className={cn(
-        "h-full overflow-hidden bg-background font-sans antialiased",
-        "border-border"
-      )}>
+      <body className={cn("h-full w-full bg-background font-sans antialiased")}>
         <Providers>
-          <main className="flex h-full w-full">
-            <AppSidebar />
-            <div className="flex-1 flex flex-col overflow-hidden">
-                {children}    
-            </div>
+          <AppSidebar />
+          <main className="relative h-svh w-full overflow-auto">
+            {children}
           </main>
           <Toaster />
         </Providers>

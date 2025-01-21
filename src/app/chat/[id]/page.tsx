@@ -1,6 +1,10 @@
 import prisma from "@/lib/prisma";
-import Chatbot from "../../../components/Chatbot/chatbot";
-import NavBar from "../../../components/NavBar";
+import {
+  ChatMessages,
+  ChatInput,
+  ScrollableChatMessages,
+} from "../../../components/Chatbot/chatbot";
+import NavBar from "@/components/NavBar";
 
 interface PageProps {
   params: { id: string };
@@ -13,14 +17,14 @@ export default async function Page({ params: { id } }: PageProps) {
   });
 
   return (
-    <div className="flex h-screen">
-      {/* Main Content */}
-      <div className="flex min-w-0 flex-1 flex-col">
-        <NavBar />
-        <div className="flex-1 overflow-auto">
-          <Chatbot chatId={id} initialMessages={initialMessages} />
-        </div>
-      </div>
-    </div>
+    <>
+      <ScrollableChatMessages
+        slotBefore={<NavBar />}
+        messagesClassName="pt-4 pb-[25%] sm:pb-[15%]"
+        chatId={id}
+        initialMessages={initialMessages}
+      />
+      <ChatInput chatId={id} initialMessages={initialMessages} />
+    </>
   );
 }

@@ -12,7 +12,7 @@ interface InputMobileProps {
   handleInputChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
   stop: () => void;
   reload: () => void;
-  messages: any[];
+  disabled: boolean;
 }
 
 export function InputMobile({
@@ -22,7 +22,7 @@ export function InputMobile({
   handleInputChange,
   stop,
   reload,
-  messages,
+  disabled,
 }: InputMobileProps) {
   return (
     <div className="relative flex-1">
@@ -49,7 +49,7 @@ export function InputMobile({
               <button
                 type="button"
                 onClick={reload}
-                disabled={messages.length === 0}
+                disabled={disabled}
                 className={cn(
                   "rounded-lg bg-muted/50 p-2",
                   "text-muted-foreground/70 transition-all duration-200",

@@ -9,10 +9,9 @@ interface InputComputerProps {
   isLoading: boolean;
   handleKeyDown: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void;
   handleInputChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   stop: () => void;
   reload: () => void;
-  messages: any[];
+  disabled: boolean;
 }
 
 export function InputComputer({
@@ -20,10 +19,9 @@ export function InputComputer({
   isLoading,
   handleKeyDown,
   handleInputChange,
-  handleSubmit,
   stop,
   reload,
-  messages,
+  disabled,
 }: InputComputerProps) {
   return (
     <div className="flex w-full gap-2">
@@ -34,7 +32,7 @@ export function InputComputer({
           onChange={handleInputChange}
           placeholder="Type your message here... (Press Enter to send, Shift + Enter for new line)"
           className={cn(
-            "w-full resize-none rounded-lg border bg-background text-base text-foreground",
+            "w-full resize-none rounded-lg border-2 bg-background text-base text-foreground",
             "placeholder:text-muted-foreground/60 focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-0",
             "disabled:cursor-not-allowed disabled:opacity-50",
             "min-h-[100px] py-3.5 px-4 pr-12",
@@ -81,7 +79,7 @@ export function InputComputer({
           <button
             type="button"
             onClick={() => reload()}
-            disabled={!messages.length}
+            disabled={disabled}
             className={cn(
               "rounded-lg bg-muted/50 p-3",
               "text-muted-foreground/70 transition-all duration-200",
