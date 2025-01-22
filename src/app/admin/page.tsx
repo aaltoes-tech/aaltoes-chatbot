@@ -1,7 +1,5 @@
-import Link from "next/link";
-import { Users, Shield, ChevronRight, Search } from "lucide-react";
+import {Shield } from "lucide-react";
 import prisma from "../../lib/prisma";
-import NavBar from "../../components/NavBar";
 import getSession from "../../lib/getSession";
 import { redirect } from "next/navigation";
 import AdminContent from "../../components/AdminContent";
@@ -33,6 +31,7 @@ export default async function Page() {
       </main>
     );
   }
+
 
   const users = await prisma.user.findMany({
     orderBy: {

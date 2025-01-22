@@ -58,6 +58,7 @@ export default function Quota() {
                         variant="outline" 
                         className="w-full hover:bg-accent hover:text-accent-foreground"
                         onClick={() => window.location.href = "mailto:admin@aaltoes.com?subject=Aaltoes%20ChatBot:%20Quota%20Request"}
+                        disabled={!session?.user?.active}
                     >
                         Request More Credits
                     </Button>

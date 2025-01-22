@@ -7,7 +7,6 @@ import "katex/dist/katex.min.css";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Providers } from "@/components/providers";
 import { cn } from "@/lib/utils";
-import NavBar from "@/components/NavBar";
 
 export const metadata: Metadata = {
   title: {

@@ -5,6 +5,9 @@ import Link from "next/link";
 import { Users, Search, ChevronRight } from "@geist-ui/icons";
 import { cn } from "@/lib/utils";
 import { Input } from "./ui/input";
+import { Switch } from "@/components/ui/switch"
+import { useToast } from "./ui/use-toast";
+import { useSession } from "next-auth/react";
 
 interface User {
   id: string;
@@ -13,6 +16,7 @@ interface User {
   image: string | null;
   role: string | null;
   quota: number | null;
+  active: boolean | true;
 }
 
 export default function AdminContent({
@@ -21,6 +25,25 @@ export default function AdminContent({
   initialUsers: User[];
 }) {
   const [searchTerm, setSearchTerm] = useState("");
+  const { toast } = useToast();
+  const { data: session } = useSession();
+
+  const toggleUserActive = async (username: string, userId: string, active: boolean) => {
+    try {
+      const response = await fetch(`/api/user/${userId}/active`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ active })
+      });
+      if (!response.ok) {
+        throw new Error();
+      } else {
+        toast({ description: `Account of ${username} was ${active ? ' activated' : ' deactivated'} successfully` });
+      }
+    } catch (error) {
+      toast({ variant: "destructive", description: "Failed to update user status" });
+    }
+  };
 
   const filteredUsers = initialUsers.filter(
     (user) =>
@@ -122,11 +145,15 @@ export default function AdminContent({
                 <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
                   Quota
                 </th>
+                <th className="px-6 py-3 text-right text-xs text-center font-medium uppercase tracking-wider text-muted-foreground">
+                  Active
+                </th>
                 <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-muted-foreground">
                   Actions
                 </th>
               </tr>
             </thead>
+
             <tbody className="divide-y divide-border bg-card">
               {filteredUsers.map((user) => (
                 <tr key={user.id} className="hover:bg-accent">
@@ -155,7 +182,14 @@ export default function AdminContent({
                     </span>
                   </td>
                   <td className="whitespace-nowrap px-6 py-4 text-sm text-muted-foreground">
-                    ${user.quota || 0}
+                    ${user.quota?.toFixed(5) || 0}
+                  </td>
+                  <td className="whitespace-nowrap items-center px-6 py-4 text-sm text-muted-foreground">
+                    <Switch 
+                      disabled={user.id === session?.user?.id}
+                      defaultChecked={user.active}
+                      onCheckedChange={(checked) => toggleUserActive(user.name || "User", user.id, checked)}
+                    />
                   </td>
                   <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
                     <Link

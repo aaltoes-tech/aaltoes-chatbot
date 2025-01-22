@@ -31,8 +31,7 @@ export default function NavBar() {
           {(!isMobile && !open) || isMobile ? (
             <Link
               href="/"
-              className="ml-1 text-center font-bold text-foreground"
-            >
+              className="ml-1 text-center font-bold text-foreground">
               Aaltoes ChatBot
             </Link>
           ) : null}

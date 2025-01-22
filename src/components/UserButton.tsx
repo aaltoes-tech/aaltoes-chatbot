@@ -73,7 +73,7 @@ export default function UserButton({ user }: UserButtonProps) {
               <span>Settings</span>
             </Link>
           </DropdownMenuItem>
-          {user.role === "Admin" && (
+          {user.role === "Admin" && user.active && (
             <DropdownMenuItem asChild>
               <Link href="/admin" className="flex items-center gap-2 px-2 py-2 cursor-pointer">
                 <Lock className="h-4 w-4 text-muted-foreground" />

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { Send, MessageCircle } from "@geist-ui/icons";
 import { useSession } from "next-auth/react";
 import { useChat } from "ai/react";
@@ -88,6 +88,7 @@ export default function WelcomeInput() {
         <form onSubmit={handleSubmit} className="relative">
           <Textarea
             value={content}
+            disabled={!session?.user?.active}
             onChange={(e) => setContent(e.target.value)}
             placeholder="Type your message here..."
             className={cn(
@@ -107,7 +108,7 @@ export default function WelcomeInput() {
           />
           <button
             type="submit"
-            disabled={!content.trim()}
+            disabled={!content.trim() || !session?.user?.active}
             className="absolute bottom-3 right-3 rounded-lg p-2 text-muted-foreground transition-colors hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
             title="Send message"
           >

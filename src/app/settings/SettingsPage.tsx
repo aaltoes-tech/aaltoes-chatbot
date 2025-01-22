@@ -21,6 +21,7 @@ import { updateProfile } from "./actions";
 import { Settings, User as UserIcon } from "@geist-ui/icons";
 import Quota from "../../components/quota";
 import { cn } from "../../lib/utils";
+import { Link } from "lucide-react";
 
 interface SettingsPageProps {
   user: User;
@@ -78,6 +79,22 @@ export default function SettingsPage({ user }: SettingsPageProps) {
             </div>
           </div>
         </div>
+        {!user.active ? (
+          <div className="mb-8 rounded-lg border border-destructive/50 bg-destructive/10 p-4">
+            <div className="flex flex-col items-center gap-3 text-center">
+              <p className="text-lg font-medium text-destructive">
+                Your account has been deactivated. Please contact an administrator if you think this is an error.
+              </p>
+              <Button 
+                variant="outline" 
+                className="hover:bg-accent hover:text-accent-foreground"
+                onClick={() => window.location.href = "mailto:admin@aaltoes.com?subject=Aaltoes%20ChatBot:%20Account%20Deactivated%20by%20error"}
+              >
+                Contact Support
+              </Button>
+            </div>
+          </div>
+        ): null}
 
         {/* Form */}
         <Form {...form}>
@@ -99,7 +116,7 @@ export default function SettingsPage({ user }: SettingsPageProps) {
                         "px-4 py-3.5 pr-12",
                         "shadow-sm transition-shadow duration-200",
                         "focus:shadow-md",
-                      )}
+                      )} disabled={!user.active}
                     />
                   </FormControl>
                   <FormDescription>
@@ -112,8 +129,8 @@ export default function SettingsPage({ user }: SettingsPageProps) {
             <div className="pt-4">
               <Button
                 type="submit"
-                disabled={form.formState.isSubmitting}
-                className="w-full sm:w-auto"
+                disabled={form.formState.isSubmitting || !user.active}
+                className="w-full sm:w-auto mx-auto block" 
               >
                 {form.formState.isSubmitting ? "Saving..." : "Save Changes"}
               </Button>

@@ -5,6 +5,8 @@ import {
   ScrollableChatMessages,
 } from "../../../components/Chatbot/chatbot";
 import NavBar from "@/components/NavBar";
+import { redirect } from "next/navigation";
+import getSession from "@/lib/getSession";
 
 interface PageProps {
   params: { id: string };
@@ -15,6 +17,14 @@ export default async function Page({ params: { id } }: PageProps) {
     where: { chat_id: id },
     select: { role: true, content: true, id: true },
   });
+
+  const session = await getSession();
+  const user = session?.user;
+
+  if (!user?.active && session) {
+    redirect("/");
+  }
+
 
   return (
     <>

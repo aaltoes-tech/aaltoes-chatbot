@@ -84,7 +84,7 @@ export function NewChatButton() {
       className="h-8 w-8"
       onClick={() => setOpenMobile(false)}
     >
-      <Icon.PlusCircle aria-hidden className="!h-5 !w-5 text-muted-foreground hover:text-foreground" />
+      <Icon.PlusSquare aria-hidden className="!h-5 !w-5 text-muted-foreground hover:text-foreground" />
       <span className="sr-only">New Chat</span>
     </ButtonLink>
   );

@@ -117,6 +117,14 @@ export async function POST(req: Request) {
       }
 
       if (num_messages % 5 === 0) {
+        const data = await prisma.chat.findUnique({
+          where: {
+            id: chatId,
+          },
+          select: {
+            topic: true
+          }
+        })
         new Promise((resolve, reject) => {
           prisma.message
             .findMany({
@@ -128,7 +136,7 @@ export async function POST(req: Request) {
             .then((chatHistory) =>
               generateText({
                 model: openaiClient(model),
-                prompt: `Generate a very concise chat topic (5 words) based on these messages:\n${chatHistory
+                prompt: `Given current chat topic: ${data?.topic}, generate a new concise chat topic (5 words) taking into account the following new messages:\n${chatHistory
                   .reverse()
                   .map((m) => `${m.role}: ${m.content}`)
                   .join("\n")}`,

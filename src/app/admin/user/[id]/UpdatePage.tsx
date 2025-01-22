@@ -28,6 +28,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Slider } from "@/components/ui/slider";
+import { Switch } from "@/components/ui/switch";
+import { useRouter } from "next/navigation";
 
 interface UpdatePageProps {
   user: {
@@ -37,6 +40,7 @@ interface UpdatePageProps {
     createdAt: Date;
     quota: number;
     role: string;
+    active: boolean;
   };
 }
 
@@ -111,7 +115,7 @@ export default function UpdatePage({ user }: UpdatePageProps) {
                           <SelectTrigger>
                             <SelectValue placeholder="Select a role" />
                           </SelectTrigger>
-                          <SelectContent>
+                          <SelectContent className="bg-background border-border">
                             <SelectItem value="User">User</SelectItem>
                             <SelectItem value="Admin">Admin</SelectItem>
                           </SelectContent>
@@ -132,14 +136,10 @@ export default function UpdatePage({ user }: UpdatePageProps) {
                   <FormItem>
                     <FormLabel>Quota ($)</FormLabel>
                     <FormControl>
-                      <Input
-                        type="number"
-                        {...field}
-                        className="max-w-md bg-background"
-                      />
+                      <Slider onValueChange={(value) => field.onChange(value[0])} value={[field.value]} defaultValue={[field.value]} max={10} step={0.5} className="border-border max-w-md bg-background"/>
                     </FormControl>
-                    <FormDescription className="text-muted-foreground">
-                      Available message quota
+                    <FormDescription className="text-muted-foreground  text-lg">
+                      Available message quota: $ {field.value}
                     </FormDescription>
                     <FormMessage className="text-destructive" />
                   </FormItem>

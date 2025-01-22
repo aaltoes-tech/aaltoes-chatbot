@@ -52,6 +52,7 @@ export function AppSidebarContent() {
 }
 
 const ChatsList = ({ userId }: { userId: string }) => {
+  const { data: session } = useSession();
   const { data: chats, status } = useQuery({
     queryKey: ["chats", { userId: userId }],
     queryFn: () => fetchChats({ userId: userId }),
@@ -132,6 +133,7 @@ const ChatsList = ({ userId }: { userId: string }) => {
               "shadow-sm transition-shadow duration-200",
               "focus:shadow-md"
             )}
+            disabled={!session?.user?.active}
           />
           <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 transform text-muted-foreground" />
         </div>
@@ -139,7 +141,7 @@ const ChatsList = ({ userId }: { userId: string }) => {
       
       <div className="flex-1 p-2 space-y-4 overflow-y-auto">
         {filteredChats.length === 0 ? (
-          <p className="p-4 text-muted-foreground">No chats found</p>
+          <p className="p-4 text-muted-foreground text-center">No chats found</p>
         ) : (
           <>
             {renderChatGroup(todayChats, "Today")}

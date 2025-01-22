@@ -27,7 +27,7 @@ export function SelectModel() {
         )}>
           <SelectValue />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="bg-background border-border">
           {Object.keys(MODELS).map((model) => (
             <SelectItem key={model} value={model}>
               {model}

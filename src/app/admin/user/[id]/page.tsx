@@ -1,12 +1,10 @@
 import prisma from "../../../../lib/prisma";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 import UpdatePage from "./UpdatePage";
 import { redirect } from "next/navigation";
-import Link from "next/link";
 import getSession from "../../../../lib/getSession";
-import NavBar from "../../../../components/NavBar";
+
 
 interface PageProps {
   params: { id: string };
@@ -22,21 +20,24 @@ const getUser = cache(async (id: string) => {
       createdAt: true,
       quota: true,
       role: true,
+      active: true,
     },
   });
 });
 
 export default async function Page({ params: { id } }: PageProps) {
   const session = await getSession();
-
   const cur_user = session?.user;
-
   const user = await getUser(id);
 
   if (!user) notFound();
 
   if (!cur_user) {
     redirect("/api/auth/signin?callbackUrl=/admin");
+  }
+
+  if (!cur_user?.active && session) {
+    redirect("/");
   }
 
   if (cur_user.role !== "Admin") {
@@ -55,6 +56,7 @@ export default async function Page({ params: { id } }: PageProps) {
           role: user.role ?? "",
           quota: user.quota ?? 0,
           createdAt: user.createdAt,
+          active: user.active ?? true,
         }}
       />
     );
