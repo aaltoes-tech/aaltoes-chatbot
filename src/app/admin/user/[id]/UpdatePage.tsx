@@ -29,8 +29,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
+import { useSidebar } from "@/components/ui/sidebar";
+import { useSession } from "next-auth/react";
 import { Switch } from "@/components/ui/switch";
-import { useRouter } from "next/navigation";
+
 
 interface UpdatePageProps {
   user: {
@@ -46,6 +48,9 @@ interface UpdatePageProps {
 
 export default function UpdatePage({ user }: UpdatePageProps) {
   const { toast } = useToast();
+  const session = useSession();
+  const { open, openMobile, isMobile } = useSidebar();
+
 
   const form = useForm<UpdateAdminValues>({
     resolver: zodResolver(updateAdminSchema),
@@ -67,6 +72,24 @@ export default function UpdatePage({ user }: UpdatePageProps) {
       });
     }
   }
+  const toggleUserActive = async (username: string, userId: string, active: boolean) => {
+    try {
+      const response = await fetch(`/api/user/${userId}/active`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ active })
+      });
+      if (!response.ok) {
+        throw new Error();
+      } else {
+        toast({ description: `Account of ${username} was ${active ? ' activated' : ' deactivated'} successfully` });
+      }
+    } catch (error) {
+      toast({ variant: "destructive", description: "Failed to update user status" });
+    }
+  };
+  
+
 
   return (
     <div className="mx-auto max-w-4xl px-4 pt-8">
@@ -94,6 +117,16 @@ export default function UpdatePage({ user }: UpdatePageProps) {
               <p className="text-sm text-muted-foreground">Modify user data</p>
             </div>
           </div>
+
+          {isMobile &&( <div className="flex items-center gap-4 pt-4">
+            Account is {user.active ? "active" : "inactive"}:
+            <Switch 
+                      disabled={user.id === session?.data?.user?.id}
+                      defaultChecked={user.active}
+              onCheckedChange={(checked) => toggleUserActive(user.name || "User", user.id, checked)}
+            />
+          </div>)}
+        
         </div>
 
         {/* Form */}

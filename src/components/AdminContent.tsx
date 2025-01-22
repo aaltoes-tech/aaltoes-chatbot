@@ -121,7 +121,9 @@ export default function AdminContent({
                       </span>
                     </div>
                   </div>
-                  <ChevronRight className="h-5 w-5 flex-shrink-0 text-muted-foreground" />
+                  <div className="flex gap-9">
+                    <ChevronRight className="h-5 w-5 flex-shrink-0 text-muted-foreground" />
+                  </div>
                 </div>
               </div>
             </Link>
