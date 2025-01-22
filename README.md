@@ -17,6 +17,8 @@ Code was written by me and optimized/fixed by [@yerzham](https://github.com/yerz
 - Dark theme
 - Topics name are generated based on the chat history
 - Chats are sorted out into three categories: Today, Yesterday, Previous 7 days
+- Banning system (banned user quota will be set to 0, they loose admin rights and access to all pages except for settings)
+- Responsive design, mobile version
 
 New functions to be added in the near future.
 
