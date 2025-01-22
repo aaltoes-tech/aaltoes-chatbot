@@ -45,7 +45,7 @@ export function AppSidebarContent() {
     
     <SidebarContent className="bg-card  border-border flex flex-col h-[calc(100vh-3.5rem)]">
       {session && session.user.id && <ChatsList userId={session.user.id} />}
-      {!session ? <p className="p-4 text-muted-foreground">Please login to view your chats</p> : null}
+      {!session ? <p className="p-4 text-muted-foreground text-center">Please login to view your chats</p> : null}
       <SidebarGroup />
     </SidebarContent>
   );
@@ -72,8 +72,8 @@ const ChatsList = ({ userId }: { userId: string }) => {
     setFilteredChats(filtered);
   }, [chats, searchTerm]);
 
-  if (status === "pending") return <p className="p-4 text-muted-foreground">Loading...</p>;
-  if (status === "error") return <p className="p-4 text-destructive">Error loading chats</p>;
+  if (status === "pending") return <p className="p-4 text-muted-foreground text-center">Loading...</p>;
+  if (status === "error") return <p className="p-4 text-destructive text-center">Error loading chats</p>;
 
   const now = new Date();
   const todayChats = filteredChats.filter(chat => 

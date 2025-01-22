@@ -88,7 +88,6 @@ export default function WelcomeInput() {
         <form onSubmit={handleSubmit} className="relative">
           <Textarea
             value={content}
-            disabled={!session?.user?.active}
             onChange={(e) => setContent(e.target.value)}
             placeholder="Type your message here..."
             className={cn(
@@ -108,7 +107,7 @@ export default function WelcomeInput() {
           />
           <button
             type="submit"
-            disabled={!content.trim() || !session?.user?.active}
+            disabled={!content.trim()}
             className="absolute bottom-3 right-3 rounded-lg p-2 text-muted-foreground transition-colors hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
             title="Send message"
           >
