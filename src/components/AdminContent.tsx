@@ -141,16 +141,16 @@ export default function AdminContent({
                 <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
                   Email
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider text-muted-foreground">
                   Role
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider text-muted-foreground">
                   Quota
                 </th>
-                <th className="px-6 py-3 text-right text-xs text-center font-medium uppercase tracking-wider text-muted-foreground">
+                <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider text-muted-foreground">
                   Active
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider text-muted-foreground">
                   Actions
                 </th>
               </tr>
@@ -178,25 +178,27 @@ export default function AdminContent({
                       {user.email}
                     </div>
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4">
+                  <td className="whitespace-nowrap px-6 py-4 text-center">
                     <span className="inline-flex rounded-full bg-primary/10 px-2 text-xs font-semibold leading-5 text-primary">
                       {user.role || "User"}
                     </span>
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4 text-sm text-muted-foreground">
+                  <td className="whitespace-nowrap px-6 py-4 text-center text-sm text-muted-foreground">
                     ${user.quota?.toFixed(5) || 0}
                   </td>
-                  <td className="whitespace-nowrap items-center px-6 py-4 text-sm text-muted-foreground">
-                    <Switch 
-                      disabled={user.id === session?.user?.id}
-                      defaultChecked={user.active}
-                      onCheckedChange={(checked) => toggleUserActive(user.name || "User", user.id, checked)}
-                    />
+                  <td className="whitespace-nowrap px-6 py-4 text-center">
+                    <div className="flex justify-center">
+                      <Switch 
+                        disabled={user.id === session?.user?.id}
+                        defaultChecked={user.active}
+                        onCheckedChange={(checked) => toggleUserActive(user.name || "User", user.id, checked)}
+                      />
+                    </div>
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
+                  <td className="whitespace-nowrap px-6 py-4 text-center text-sm font-medium">
                     <Link
                       href={`/admin/user/${user.id}`}
-                      className="flex items-center justify-end gap-1 text-primary hover:text-primary/80"
+                      className="inline-flex items-center justify-center gap-1 text-primary hover:text-primary/80"
                     >
                       Edit
                       <ChevronRight className="h-4 w-4" />
