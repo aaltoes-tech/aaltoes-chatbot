@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 import { useSidebar } from "../ui/sidebar";
 import { InputComputer } from "./ui/input-computer";
 import { InputMobile } from "./ui/input-mobile";
+import { useModel } from "@/hooks/use-model";
 
 type Message = {
   role: "user" | "system" | "assistant";
@@ -55,10 +56,14 @@ export function ScrollableChatMessages({
 }) {
   const [isAtBottom, setIsAtBottom] = useState(true);
   const scrollableRef = useRef<HTMLDivElement>(null);
+  const model = useModel();
 
   const { messages } = useChat({
     id: chatId,
     api: "/api/chat",
+    headers: {
+      model,
+    },
     experimental_throttle: 50,
     initialMessages: initialMessages,
   });
@@ -114,10 +119,14 @@ function ChatMessages({
   initialMessages: Message[];
   className?: string;
 }) {
+  const model = useModel();
   const { isMobile } = useSidebar();
   const { messages } = useChat({
     id: chatId,
     api: "/api/chat",
+    headers: {
+      model
+    },
     experimental_throttle: 50,
     initialMessages: initialMessages,
   });
@@ -160,9 +169,8 @@ const ChatInput = ({
   initialMessages: Message[];
   className?: string;
 }) => {
-  const messageCountRef = useRef(0);
   const { data: session } = useSession();
-
+  const model = useModel();
   const { isMobile } = useSidebar();
   const {
     messages,
@@ -176,16 +184,13 @@ const ChatInput = ({
     id: chatId,
     api: "/api/chat",
     headers: {
-      num_messages: messageCountRef.current.toString(),
+      model
     },
     body: {
       id: chatId,
     },
     initialMessages: initialMessages,
     experimental_throttle: 50,
-    onFinish: () => {
-      messageCountRef.current = messages.length + 1;
-    },
     onError: (error) => {
       const errorMessage = error.message || "An error occurred";
       toast({

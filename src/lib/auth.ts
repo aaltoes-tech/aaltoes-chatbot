@@ -14,7 +14,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     session({ session, user }) {
       session.user.role = user.role;
       session.user.quota = user.quota;
-      session.user.model = user.model || "gpt-4o-mini";
       session.user.active = user.active;
       return session;
     },

@@ -1,6 +1,7 @@
 import { Toaster } from "../components/ui/toaster";
 import type { Metadata } from "next";
 import { GeistMono } from "geist/font/mono";
+import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 
 import "katex/dist/katex.min.css";
@@ -22,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={GeistMono.className}>
+    <html lang="en" suppressHydrationWarning className={`${GeistSans.variable} ${GeistMono.variable} font-sans`}>
       <head>
         <link
           rel="stylesheet"

@@ -19,6 +19,7 @@ const reqSchema = z.object({
   ),
   id: z.string(),
 });
+
 export async function POST(req: Request) {
   const session = await getSession();
   const user = session?.user;
@@ -51,8 +52,7 @@ export async function POST(req: Request) {
       );
     }
     const { messages, id: chatId } = body.data;
-    const model = session?.user?.model || "gpt-4o-mini";
-    const num_messages = parseInt(req.headers.get("num_messages") || "0");
+    const model = req.headers.get('model') || "gpt-4o-mini";
 
     if (!chatId) {
       return new Response(
@@ -116,7 +116,7 @@ export async function POST(req: Request) {
         });
       }
 
-      if (num_messages % 5 === 0) {
+      if ( Math.random() < 0.5) {
         const data = await prisma.chat.findUnique({
           where: {
             id: chatId,

@@ -1,21 +1,27 @@
 "use client";
 
-import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MODELS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export function SelectModel() {
-  const { data: session, update } = useSession();
-  const [selectedModel, setSelectedModel] = useState(
-    session?.user?.model || "gpt-4o-mini"
-  );
+  const [selectedModel, setSelectedModel] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('selectedModel') || "gpt-4o-mini";
+    }
+    return "gpt-4o-mini";
+  });
+
+  useEffect(() => {
+    if (selectedModel) {
+      localStorage.setItem('selectedModel', selectedModel);
+    }
+  }, [selectedModel]);
 
   const handleModelChange = async (newModel: string) => {
     setSelectedModel(newModel);
-    await update({ user: { model: newModel } });
   };
 
   return (
