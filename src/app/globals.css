@@ -123,3 +123,11 @@
   }
 }
 
+[data-theme='dark']  svg {
+  color: white;
+}
+
+[data-theme='light'] svg {
+  color: black;
+}
+
