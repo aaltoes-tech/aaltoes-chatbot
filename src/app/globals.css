@@ -123,11 +123,35 @@
   }
 }
 
-[data-theme='dark']  svg {
-  color: white;
+:is([class~="dark"]) img.logo {
+  filter: invert(1) brightness(100);
 }
 
-[data-theme='light'] svg {
-  color: black;
+:is([class~="light"]) img.logo {
+  filter: none;
+}
+
+.auth-logo {
+  position: relative;
+}
+
+.auth-logo img {
+  height: 2rem;
+}
+
+.auth-logo .light-only {
+  display: none;
+}
+
+.auth-logo .dark-only {
+  display: block;
+}
+
+[data-theme="light"] .auth-logo .light-only {
+  display: block;
+}
+
+[data-theme="light"] .auth-logo .dark-only {
+  display: none;
 }
 
