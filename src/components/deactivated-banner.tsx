@@ -18,7 +18,7 @@ export function DeactivatedBanner() {
         <Button 
           variant="outline" 
           className="flex-1 hover:bg-accent hover:text-accent-foreground"
-          onClick={() => window.location.href = "mailto:admin@aaltoes.com?subject=Aaltoes%20ChatBot:%20Account%20Deactivated%20by%20error"}
+          onClick={() => window.location.href = "mailto:yera.slam@aaltoes.com?subject=Aaltoes%20ChatBot:%20Account%20Deactivated%20by%20error"}
         >
           Contact Support
         </Button>
