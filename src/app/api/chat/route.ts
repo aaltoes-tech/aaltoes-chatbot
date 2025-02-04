@@ -5,6 +5,11 @@ import getSession from "../../../lib/getSession";
 import { MODELS } from "../../../lib/constants";
 import { encodingForModel, TiktokenModel } from "js-tiktoken";
 import { z } from "zod";
+import { createDeepSeek } from '@ai-sdk/deepseek';
+
+const deepseek = createDeepSeek({
+  apiKey: process.env.DEEPSEEK_API_KEY,
+});
 
 const openaiClient = createOpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -135,7 +140,7 @@ export async function POST(req: Request) {
             })
             .then((chatHistory) =>
               generateText({
-                model: openaiClient(model),
+                model: ((model === "deepseek-chat" || model === "deepseek-reasoner") ? deepseek(model as keyof typeof MODELS) : openaiClient(model)) as any,
                 prompt: `Given current chat topic: ${data?.topic}, generate a new concise chat topic (5 words) taking into account the following new messages:\n${chatHistory
                   .reverse()
                   .map((m) => `${m.role}: ${m.content}`)
@@ -155,9 +160,10 @@ export async function POST(req: Request) {
           console.error("Error generating chat topic:", error);
         });
       }
+      console.log(model)
 
       const stream = await streamText({
-        model: openaiClient(model),
+        model: ((model === "deepseek-chat" || model === "deepseek-reasoner") ? deepseek(model) : openaiClient(model)) as any,
         messages: [...messages],
         temperature: 0.7,
         frequencyPenalty: 0.5,

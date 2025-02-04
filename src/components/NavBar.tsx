@@ -14,7 +14,7 @@ export default function NavBar() {
   const user = session?.user;
   const pathname = usePathname();
 
-  const isChatPage = pathname.startsWith("/chat/");
+  const isChatPage = pathname.startsWith("/chat/") || pathname === "/";
 
   const { open, openMobile, isMobile } = useSidebar();
 

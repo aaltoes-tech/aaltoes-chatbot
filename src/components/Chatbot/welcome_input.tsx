@@ -9,6 +9,7 @@ import cuid from "cuid";
 import { useQueryClient } from "@tanstack/react-query";
 import { Textarea } from "../ui/textarea";
 import { cn } from "@/lib/utils";
+import { useModel } from "@/hooks/use-model";
 
 export default function WelcomeInput() {
   const { data: session } = useSession();
@@ -20,9 +21,7 @@ export default function WelcomeInput() {
     setId(cuid());
   }, []);
 
-  const [selectedModel, setSelectedModel] = useState(
-    session?.user?.model || "gpt-4o-mini",
-  );
+  const model = useModel(); 
 
   const queryClient = useQueryClient();
 
@@ -30,7 +29,7 @@ export default function WelcomeInput() {
     id: id,
     api: "/api/chat",
     headers: {
-      model: selectedModel,
+      model: model,
       num_messages: "0",
     },
     body: {

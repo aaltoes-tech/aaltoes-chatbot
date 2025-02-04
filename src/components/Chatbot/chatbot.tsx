@@ -62,7 +62,7 @@ export function ScrollableChatMessages({
     id: chatId,
     api: "/api/chat",
     headers: {
-      model,
+      model: model,
     },
     experimental_throttle: 50,
     initialMessages: initialMessages,
@@ -125,7 +125,7 @@ function ChatMessages({
     id: chatId,
     api: "/api/chat",
     headers: {
-      model
+      model: model,
     },
     experimental_throttle: 50,
     initialMessages: initialMessages,

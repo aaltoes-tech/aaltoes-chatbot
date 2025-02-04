@@ -10,5 +10,13 @@ export const MODELS = {
     "gpt-4":{
         "input_quota": 30/1000000,
         "output_quota": 60/1000000
+    },
+    "deepseek-chat":{
+        "input_quota": 30/1000000,
+        "output_quota": 60/1000000
+    },
+    "deepseek-reasoner":{
+        "input_quota": 30/1000000,
+        "output_quota": 60/1000000
     }
 }
