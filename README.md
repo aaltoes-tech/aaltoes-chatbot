@@ -1,33 +1,83 @@
-# Aaltoes ChatBot
-ChatBot that utilizes ChatGPT API to provide generic assistance. 
-It is preocupied with administrative page to assign all participants of the organization roles and quota (tokens are translated to the money equivalent).
-The code ressembles with ChatGPT design to ensure comforting experience.
 
-The project was developed using `next.js`
-Code was written by me and optimized/fixed by [@yerzham](https://github.com/yerzham)
+# Aaltoes ChatBot
+
+A ChatBot utilizing the ChatGPT API to provide generic assistance, designed specifically for Aaltoes. This project features a user-friendly administrative panel to manage roles and quotas, with an intuitive interface inspired by ChatGPT's design.
 
 ## Features
-- Authorization with Google
-- Responses are streamed and rendered in memoized markdown
-- Selector of different ChatGPT model (affect on the way quota is counted)
-- Autoscroll function
-- Reload/stop of responses
-- Admin role/panel
-- Quota system (quota requests via e-mails)
-- Dark theme
-- Topics name are generated based on the chat history
-- Chats are sorted out into three categories: Today, Yesterday, Previous 7 days
-- Banning system (banned user quota will be set to 0, they loose admin rights and access to all pages except for settings)
-- Responsive design, mobile version
 
-New functions to be added in the near future.
+- Authorization with Google.
+- Responses are streamed and rendered in memoized markdown.
+- Ability to select different ChatGPT models which affect how quotas are counted.
+- Autoscroll functionality.
+- Ability to reload/stop responses.
+- Admin panel for role management.
+- Quota system managed via email requests.
+- Dark theme for better usability in low-light conditions.
+- Dynamic topic generation based on chat history.
+- Chats categorized by date: Today, Yesterday, Last 7 Days.
+- Banning system with immediate effects on user rights and quotas.
+- Responsive design, optimized for mobile and desktop devices.
 
-## Sample images
-###  Chat interface
-![image](https://github.com/user-attachments/assets/964f4fc4-ac6c-47d3-abd5-d798f0d651fc)
-### Settings page
-![image](https://github.com/user-attachments/assets/017c4705-d264-41ed-b12b-dd0b35ae5c2f)
-### Admin panel
-![image](https://github.com/user-attachments/assets/d29c2046-4be1-469e-8b6f-aab16aa0ce69)
-### Modification of the user data
-![image](https://github.com/user-attachments/assets/7a8214ed-634b-40b8-a08a-eef499ddd534)
+## Installation
+
+### Prerequisites
+- Node.js (>= 16.x)
+- npm or yarn
+
+### Setup
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/aaltoes/aaltoes-chatbot.git
+   ```
+2. Navigate to the project folder:
+   ```bash
+   cd aaltoes-chatbot
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Configure environment variables:
+   - Create a `.env.local` file in the root directory.
+   - Add the following environment variables:
+     ```
+     NEXTAUTH_SECRET=your_secret_here
+     GOOGLE_CLIENT_ID=your_google_client_id_here
+     GOOGLE_CLIENT_SECRET=your_google_client_secret_here
+     OPENAI_API_KEY=your_openai_api_key_here
+     DATABASE_URL=your_database_url_here
+     ```
+   Ensure you replace `your_secret_here`, `your_google_client_id_here`, `your_google_client_secret_here`, `your_openai_api_key_here`, and `your_database_url_here` with your actual credentials.
+
+5. Run the development server:
+   ```bash
+   npm run dev
+   ```
+6. Open `http://localhost:3000` in your browser to access the chatbot.
+
+## Contributing
+
+Contributions are welcome! Please refer to our [CONTRIBUTING.md](CONTRIBUTING.md) for detailed information on how you can contribute to the Aaltoes ChatBot project.
+
+## Code of Conduct
+
+This project and everyone participating in it is governed by the [Aaltoes Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
+
+## License
+
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+
+## Issues & Support
+
+Encounter a bug or have a feature request? Please file it in the [GitHub Issues](https://github.com/aaltoes/aaltoes-chatbot/issues) section. For support or general inquiries, use our [Discussions](https://github.com/aaltoes/aaltoes-chatbot/discussions) page.
+
+## Acknowledgments
+
+Developed and maintained by Aaltoes. Special thanks to contributors [@kankeinai](https://github.com/kankeinai) and [@yerzham](https://github.com/yerzham) for their dedication and hard work.
+
+## Community & Contact
+
+Connect with us:
+- **Website:** [aaltoes.com](https://aaltoes.com)
+- **Telegram:** [Join Aaltoes Community](https://t.me/+lcMtXV1EAr9mYzIy)
+- **Email:** [board@aaltoes.com](mailto:board@aaltoes.com)
