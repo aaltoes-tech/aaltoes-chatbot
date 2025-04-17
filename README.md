@@ -62,7 +62,7 @@ A ChatBot utilizing the ChatGPT API to provide generic assistance, designed spec
 
 ## Contributing
 
-Contributions are welcome! Please refer to our [CONTRIBUTING.md](CONTRIBUTING.md) for detailed information on how you can contribute to the Aaltoes ChatBot project.
+Contributions are welcome! Please refer to our [CONTRIBUTIONS.md](CONTRIBUTIONS.md) for detailed information on how you can contribute to the Aaltoes ChatBot project.
 
 ## Code of Conduct
 
